@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador: Matriz Tridiagonal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    @font-face {
+      font-family: 'Monocraft';
+      src: url('https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: 'Monocraft', monospace;
+    }
+        .neon-border {
+            box-shadow: 0 0 5px #fff, 0 0 10px #a855f7, inset 0 0 5px #a855f7;
+        }
+        .matrix-cell {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            color: #f1f5f9;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-4xl p-4"><a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded mb-4 transition duration-300 neon-border">Volver</a></div>
+
+    <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+        <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: Matriz Tridiagonal</h1>
+        
+        <div class="flex flex-col items-center gap-6 mb-8">
+            <div class="grid grid-cols-4 gap-4 bg-slate-950 p-6 rounded-xl border border-slate-800 w-full max-w-md">
+                <input type="number" id="input-a" value="2" placeholder="a" class="bg-slate-900 text-slate-100 border-2 border-slate-700 rounded p-2 text-center">
+                <input type="number" id="input-b" value="1" placeholder="b" class="bg-slate-900 text-slate-100 border-2 border-slate-700 rounded p-2 text-center">
+                <input type="number" id="input-c" value="3" placeholder="c" class="bg-slate-900 text-slate-100 border-2 border-slate-700 rounded p-2 text-center">
+                <input type="number" id="input-n" value="3" placeholder="n" class="bg-slate-900 text-slate-100 border-2 border-slate-700 rounded p-2 text-center">
+            </div>
+            <button onclick="generateMatrix()" class="border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95">
+                Generar Matriz
+            </button>
+        </div>
+
+        <div class="flex justify-center" id="matrix-container"></div>
+    </main>
+
+    <script>
+        function generateMatrix() {
+            const a = parseInt(document.getElementById('input-a').value);
+            const b = parseInt(document.getElementById('input-b').value);
+            const c = parseInt(document.getElementById('input-c').value);
+            const n = parseInt(document.getElementById('input-n').value);
+
+            const container = document.getElementById('matrix-container');
+            container.innerHTML = '';
+            
+            const table = document.createElement('div');
+            table.style.display = 'grid';
+            table.style.gridTemplateColumns = `repeat(${n}, 50px)`;
+            table.style.gap = '2px';
+            
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    let val = 0;
+                    if (i === j) val = a;
+                    else if (i === j - 1) val = b;
+                    else if (i === j + 1) val = c;
+                    
+                    const cell = document.createElement('div');
+                    cell.className = 'matrix-cell';
+                    cell.innerText = val;
+                    table.appendChild(cell);
+                }
+            }
+            container.appendChild(table);
+        }
+        generateMatrix();
+    </script>
+</body>
+</html>

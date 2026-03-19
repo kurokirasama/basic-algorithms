@@ -104,6 +104,32 @@ function vector_piecewise(x, n) {
   return y;
 }
 
+/**
+ * Generates an n x n tridiagonal matrix.
+ * @param {number} a The diagonal value.
+ * @param {number} b The upper diagonal value.
+ * @param {number} c The lower diagonal value.
+ * @param {number} n The size of the matrix.
+ * @returns {number[][]} The tridiagonal matrix.
+ */
+function tridiagonal(a, b, c, n) {
+  let A = Array.from({ length: n }, () => Array(n).fill(0));
+  
+  for (let i = 0; i < n; i++) {
+    A[i][i] = a;
+  }
+
+  for (let i = 0; i < n - 1; i++) {
+    A[i][i + 1] = b;
+  }
+  
+  for (let i = 1; i < n; i++) {
+    A[i][i - 1] = c;
+  }
+  
+  return A;
+}
+
 module.exports = {
   minimo,
   sort_desc,
@@ -111,4 +137,5 @@ module.exports = {
   palindrome,
   piecewise,
   vector_piecewise,
+  tridiagonal,
 };

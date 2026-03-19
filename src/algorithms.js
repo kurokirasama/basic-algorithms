@@ -75,9 +75,25 @@ function palindrome(n) {
   return n === m;
 }
 
+/**
+ * Evaluates a piece-wise function.
+ * @param {number} x The input value.
+ * @returns {number} The evaluated result.
+ */
+function piecewise(x) {
+  if (x <= -1) {
+    return Math.pow(x, 2);
+  } else if (x < 1) {
+    return x;
+  } else {
+    return Math.pow(x, 3);
+  }
+}
+
 module.exports = {
   minimo,
   sort_desc,
   reverse_digits,
   palindrome,
+  piecewise,
 };

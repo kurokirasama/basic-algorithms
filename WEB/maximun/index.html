@@ -39,10 +39,10 @@
                 <span id="display-i" class="text-3xl font-mono font-semibold">-</span>
             </div>
             <div class="flex-1 min-w-[100px] flex flex-col">
-                <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Valor x(i)</span>
+                <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Valor x(i)</span>
                 <span id="display-val" class="text-3xl font-mono font-semibold text-red-500">-</span>
             </div>
-            <div class="flex-1 min-w-[100px] flex flex-col md:border-l border-slate-200">
+            <div class="flex-1 min-w-[100px] flex flex-col md:border-l border-slate-800">
                 <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Máximo Anterior</span>
                 <span id="display-prev-max" class="text-3xl font-mono font-semibold text-slate-500">-</span>
             </div>
@@ -147,7 +147,7 @@
                 nextBtn.disabled = true;
                 nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 nextBtn.innerText = "Finalizado";
-                stepDesc.innerHTML = `<span class="text-indigo-600 font-bold text-lg">Fin del recorrido. El valor máximo es ${currentMax}.</span>`;
+                stepDesc.innerHTML = `<span class="text-indigo-400 font-bold text-lg">Fin del recorrido. El valor máximo es ${currentMax}.</span>`;
                 document.querySelectorAll('.active-element').forEach(el => el.classList.remove('active-element'));
             }
         }

@@ -21,9 +21,9 @@ describe('Reverse Digits Simulation Page', () => {
     expect(volverBtn.attr('href')).toBe('../../index.html');
   });
 
-  it('should have extraction and reversal containers', () => {
-    expect($('#container-x').length).toBeGreaterThan(0);
-    expect($('#container-y').length).toBeGreaterThan(0);
+  it('should have only the extraction container', () => {
+    expect($('#container-x').length).toBe(1);
+    expect($('#container-y').length).toBe(0);
   });
 
   it('should have simulation controls', () => {

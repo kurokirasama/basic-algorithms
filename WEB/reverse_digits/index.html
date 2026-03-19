@@ -24,7 +24,6 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .highlight-x { background-color: #450a0a; border-color: #991b1b; }
-        .highlight-y { background-color: #064e3b; border-color: #166534; }
         .neon-border {
             box-shadow: 0 0 5px #fff, 0 0 10px #a855f7, inset 0 0 5px #a855f7;
         }
@@ -36,14 +35,10 @@
     <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
         <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: Inversión de Dígitos</h1>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                <h2 class="text-sm font-bold text-slate-400 uppercase mb-4 text-center">Extracción (x)</h2>
+        <div class="flex justify-center mb-8">
+            <div class="bg-slate-950 p-6 rounded-xl border border-slate-800 w-full max-w-xl">
+                <h2 class="text-sm font-bold text-slate-400 uppercase mb-4 text-center">Dígitos Extraídos (x)</h2>
                 <div class="flex flex-wrap justify-center gap-2" id="container-x"></div>
-            </div>
-            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                <h2 class="text-sm font-bold text-slate-400 uppercase mb-4 text-center">Invertido (y)</h2>
-                <div class="flex flex-wrap justify-center gap-2" id="container-y"></div>
             </div>
         </div>
 
@@ -73,13 +68,10 @@
             
             <div class="flex flex-wrap justify-center gap-4">
                 <input type="number" id="input-n" placeholder="Ej: 1234" class="px-4 py-2 bg-slate-900 text-slate-100 border-2 border-slate-700 rounded-lg focus:border-purple-500 outline-none w-32 text-center font-mono font-bold">
-                <button onclick="resetWithRandom()" class="px-6 py-2 border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
-                    Aleatorio
-                </button>
-                <button onclick="startSimulation()" class="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-lg font-medium transition-colors">
+                <button onclick="startSimulation()" class="border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
                     Cargar
                 </button>
-                <button id="next-btn" onclick="nextStep()" class="px-8 py-2 border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95 disabled:opacity-50">
+                <button id="next-btn" onclick="nextStep()" class="border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95 disabled:opacity-50">
                     Siguiente Paso
                 </button>
             </div>
@@ -90,11 +82,9 @@
         let n = 0;
         let digits = [];
         let i = 0;
-        let state = 'EXTRACT'; // EXTRACT, REVERSE, FINISHED
         let isFinished = false;
 
         const containerX = document.getElementById('container-x');
-        const containerY = document.getElementById('container-y');
         const displayN = document.getElementById('display-n');
         const displayI = document.getElementById('display-i');
         const displayDigit = document.getElementById('display-digit');
@@ -103,12 +93,6 @@
         const nextBtn = document.getElementById('next-btn');
         const inputN = document.getElementById('input-n');
 
-        function resetWithRandom() {
-            const randomVal = Math.floor(Math.random() * 8999) + 1000;
-            inputN.value = randomVal;
-            startSimulation();
-        }
-
         function startSimulation() {
             const val = parseInt(inputN.value);
             if (isNaN(val) || val < 0) return;
@@ -116,13 +100,11 @@
             n = val;
             digits = [];
             i = 0;
-            state = 'EXTRACT';
             isFinished = false;
             nextBtn.disabled = false;
             nextBtn.innerText = "Siguiente Paso";
             
             containerX.innerHTML = '';
-            containerY.innerHTML = '';
             displayN.innerText = n;
             displayI.innerText = 1;
             displayDigit.innerText = "-";
@@ -133,45 +115,28 @@
         function nextStep() {
             if (isFinished) return;
 
-            if (state === 'EXTRACT') {
-                if (n > 0) {
-                    let digit = n % 10;
-                    digits.push(digit);
-                    
-                    const box = document.createElement('div');
-                    box.className = 'w-10 h-10 flex items-center justify-center border-2 border-red-900 rounded highlight-x font-bold vector-box active-digit';
-                    box.innerText = digit;
-                    containerX.appendChild(box);
-                    
-                    stepDesc.innerText = `Extrayendo: ${digit}. n ahora es ${Math.floor(n / 10)}.`;
-                    
-                    n = Math.floor(n / 10);
-                    displayN.innerText = n;
-                    displayDigit.innerText = digit;
-                    displayCount.innerText = i + 1;
-                    i++;
-                } else {
-                    state = 'REVERSE';
-                    stepDesc.innerText = "Dígitos extraídos. Reordenando...";
-                    nextStep();
-                }
-            } else if (state === 'REVERSE') {
-                if (digits.length > 0) {
-                    let digit = digits.pop();
-                    const box = document.createElement('div');
-                    box.className = 'w-10 h-10 flex items-center justify-center border-2 border-emerald-900 rounded highlight-y font-bold vector-box active-digit';
-                    box.innerText = digit;
-                    containerY.appendChild(box);
-                    stepDesc.innerText = `Reordenando: ${digit}`;
-                } else {
-                    state = 'FINISHED';
-                    nextStep();
-                }
-            } else if (state === 'FINISHED') {
+            if (n > 0) {
+                let digit = n % 10;
+                digits.push(digit);
+                
+                const box = document.createElement('div');
+                box.className = 'w-10 h-10 flex items-center justify-center border-2 border-red-900 rounded highlight-x font-bold vector-box active-digit';
+                box.innerText = digit;
+                containerX.appendChild(box);
+                
+                stepDesc.innerText = `Extrayendo: ${digit}. n ahora es ${Math.floor(n / 10)}.`;
+                
+                n = Math.floor(n / 10);
+                displayN.innerText = n;
+                displayDigit.innerText = digit;
+                displayCount.innerText = i + 1;
+                i++;
+            } else {
                 isFinished = true;
                 nextBtn.disabled = true;
                 nextBtn.innerText = "Finalizado";
-                stepDesc.innerHTML = `<span class="text-purple-400 font-bold">Inversión completada.</span>`;
+                stepDesc.innerHTML = `<span class="text-purple-400 font-bold">Inversión completada: [${digits.reverse().join(', ')}]</span>`;
+                document.querySelectorAll('.active-digit').forEach(el => el.classList.remove('active-digit'));
             }
         }
 

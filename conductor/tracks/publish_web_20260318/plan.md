@@ -4,9 +4,9 @@
 - [x] Task: Initialize Node.js environment fb49555
     - [x] Run `npm init -y`
     - [x] Install Express `npm install express`
-- [ ] Task: Create Node.js Server (`server.js`)
-    - [ ] Configure Express to serve static files from current directory
-    - [ ] Set port to 8004
+- [x] Task: Create Node.js Server (`server.js`) e6cefc5
+    - [x] Configure Express to serve static files from current directory
+    - [x] Set port to 8004
     - [ ] Task: Conductor - User Manual Verification 'Setup Infrastructure' (Protocol in workflow.md)
 
 ## Phase 2: Landing Page Development

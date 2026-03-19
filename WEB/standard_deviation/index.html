@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador: Desviación Estándar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .active-element {
+            border: 4px solid #ef4444 !important;
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        .processed {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+        }
+        .transition-all {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+
+    <main class="w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+        <h1 class="text-2xl font-bold text-center mb-8 text-indigo-700">Simulación: Desviación Estándar</h1>
+        
+        <div class="flex flex-wrap justify-center gap-3 mb-10" id="array-container"></div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center bg-slate-100 p-6 rounded-xl mb-8">
+            <div class="flex flex-col">
+                <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Media (mean)</span>
+                <span id="display-mean" class="text-3xl font-mono font-semibold">-</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xs text-blue-600 uppercase font-bold tracking-wider">Diferencia²</span>
+                <span id="display-diff" class="text-3xl font-mono font-semibold text-blue-600">0</span>
+            </div>
+            <div class="flex flex-col border-t md:border-t-0 md:border-l border-slate-200 pt-4 md:pt-0">
+                <span class="text-xs text-indigo-600 uppercase font-bold tracking-wider">Suma (sum)</span>
+                <span id="display-sum" class="text-3xl font-mono font-semibold text-indigo-600">0</span>
+            </div>
+            <div class="flex flex-col border-t md:border-t-0 md:border-l border-slate-200 pt-4 md:pt-0">
+                <span class="text-xs text-emerald-600 uppercase font-bold tracking-wider">Desv. Estándar</span>
+                <span id="display-std" class="text-4xl font-mono font-bold text-emerald-600">-</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center gap-6">
+            <p id="step-desc" class="text-center italic text-slate-600 min-h-[3rem] px-4 max-w-2xl">
+                Presiona "Siguiente Paso" para calcular la media e iniciar el bucle.
+            </p>
+            
+            <div class="flex gap-4">
+                <button onclick="resetSimulation()" class="px-6 py-2 bg-slate-200 hover:bg-slate-300 rounded-lg font-medium transition-colors">
+                    Reiniciar (Aleatorio)
+                </button>
+                <button id="next-btn" onclick="nextStep()" class="px-8 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition-all shadow-lg active:scale-95">
+                    Siguiente Paso
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let numbers = [];
+        let currentIdx = 0;
+        let sumOfSquares = 0;
+        let mean = 0;
+        let isFinished = false;
+        let hasMean = false;
+
+        const arrayContainer = document.getElementById('array-container');
+        const displayMean = document.getElementById('display-mean');
+        const displayDiff = document.getElementById('display-diff');
+        const displaySum = document.getElementById('display-sum');
+        const displayStd = document.getElementById('display-std');
+        const stepDesc = document.getElementById('step-desc');
+        const nextBtn = document.getElementById('next-btn');
+
+        function generateRandomArray() {
+            const size = Math.floor(Math.random() * 3) + 5;
+            numbers = Array.from({ length: size }, () => Math.floor(Math.random() * 15) + 1);
+        }
+
+        function initArrayUI() {
+            arrayContainer.innerHTML = '';
+            numbers.forEach((num, index) => {
+                const div = document.createElement('div');
+                div.id = `box-${index}`;
+                div.className = 'w-14 h-14 md:w-16 md:h-16 flex items-center justify-center bg-white border-2 border-slate-300 rounded-lg text-xl font-bold shadow-sm transition-all duration-300';
+                div.innerText = num;
+                arrayContainer.appendChild(div);
+            });
+        }
+
+        function resetSimulation() {
+            generateRandomArray();
+            currentIdx = 0;
+            sumOfSquares = 0;
+            mean = 0;
+            isFinished = false;
+            hasMean = false;
+            nextBtn.disabled = false;
+            nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            nextBtn.innerText = "Siguiente Paso";
+            
+            displayMean.innerText = "-";
+            displayDiff.innerText = "0";
+            displaySum.innerText = "0";
+            displayStd.innerText = "-";
+            stepDesc.innerText = "Calcularemos primero la media de los datos.";
+            initArrayUI();
+        }
+
+        function nextStep() {
+            if (isFinished) return;
+
+            const n = numbers.length;
+
+            if (!hasMean) {
+                const total = numbers.reduce((a, b) => a + b, 0);
+                mean = parseFloat((total / n).toFixed(2));
+                displayMean.innerText = mean;
+                stepDesc.innerText = `Paso 1: Media = ${total} / ${n} = ${mean}. Iniciando suma de cuadrados.`;
+                hasMean = true;
+                return;
+            }
+
+            if (currentIdx < n) {
+                const val = numbers[currentIdx];
+                const diff = (val - mean);
+                const diffSq = parseFloat((diff * diff).toFixed(2));
+                sumOfSquares += diffSq;
+                
+                stepDesc.innerText = `Sumando (${val} - ${mean})² = ${diffSq}. Acumulado: ${sumOfSquares.toFixed(2)}`;
+                render(currentIdx, diffSq);
+                currentIdx++;
+            } else {
+                const variance = sumOfSquares / (n - 1);
+                const stdDev = Math.sqrt(variance).toFixed(2);
+                displayStd.innerText = stdDev;
+                stepDesc.innerHTML = `<span class="text-indigo-600 font-bold text-lg">Cálculo final: √(${sumOfSquares.toFixed(2)} / ${n-1}) = ${stdDev}</span>`;
+                isFinished = true;
+                nextBtn.innerText = "Finalizado";
+                nextBtn.disabled = true;
+                nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                document.querySelectorAll('.active-element').forEach(el => el.classList.remove('active-element'));
+            }
+        }
+
+        function render(activeIndex, currentDiff) {
+            for (let k = 0; k < numbers.length; k++) {
+                const box = document.getElementById(`box-${k}`);
+                if (k === activeIndex) {
+                    box.classList.add('active-element', 'processed');
+                } else if (k < activeIndex) {
+                    box.classList.remove('active-element');
+                    box.classList.add('processed');
+                } else {
+                    box.classList.remove('active-element', 'processed');
+                }
+            }
+            displayDiff.innerText = currentDiff;
+            displaySum.innerText = sumOfSquares.toFixed(2);
+        }
+
+        resetSimulation();
+    </script>
+</body>
+</html>

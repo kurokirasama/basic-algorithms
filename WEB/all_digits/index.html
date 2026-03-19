@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador: Descomposición de Dígitos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .active-digit {
+            border: 4px solid #ef4444 !important;
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        .vector-box {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .highlight-x { background-color: #fee2e2; border-color: #f87171; }
+        .highlight-y { background-color: #dcfce7; border-color: #22c55e; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+
+    <main class="w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+        <h1 class="text-2xl font-bold text-center mb-8 text-indigo-700">Simulación: Descomposición y Reordenamiento</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <h2 class="text-sm font-bold text-slate-500 uppercase mb-4 text-center">Paso 1: Extracción x(i)</h2>
+                <div class="flex flex-wrap justify-center gap-2" id="container-x"></div>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <h2 class="text-sm font-bold text-slate-500 uppercase mb-4 text-center">Paso 2: Resultado y(j)</h2>
+                <div class="flex flex-wrap justify-center gap-2" id="container-y"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center bg-indigo-50 p-6 rounded-xl mb-8 border border-indigo-100">
+            <div class="flex flex-col">
+                <span class="text-xs text-indigo-600 uppercase font-bold tracking-wider">Valor n</span>
+                <span id="display-n" class="text-3xl font-mono font-bold text-indigo-900">-</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Índice i</span>
+                <span id="display-i" class="text-3xl font-mono font-semibold">-</span>
+            </div>
+            <div class="flex flex-col border-t md:border-t-0 md:border-l border-indigo-200 pt-4 md:pt-0">
+                <span class="text-xs text-red-500 uppercase font-bold tracking-wider">x(i) = mod(n,10)</span>
+                <span id="display-mod" class="text-3xl font-mono font-bold text-red-500">-</span>
+            </div>
+            <div class="flex flex-col border-t md:border-t-0 md:border-l border-indigo-200 pt-4 md:pt-0">
+                <span class="text-xs text-emerald-600 uppercase font-bold tracking-wider">Longitud Final</span>
+                <span id="display-len" class="text-3xl font-mono font-bold text-emerald-600">-</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center gap-6">
+            <p id="step-desc" class="text-center italic text-slate-600 min-h-[3rem] px-4 max-w-2xl">
+                Ingresa un número o genera uno aleatorio para comenzar.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <input type="number" id="input-n" placeholder="Ej: 4567" class="px-4 py-2 border-2 border-slate-200 rounded-lg focus:border-indigo-500 outline-none w-32 text-center font-mono font-bold">
+                <button onclick="resetWithRandom()" class="px-6 py-2 bg-slate-200 hover:bg-slate-300 rounded-lg font-medium transition-colors">
+                    Aleatorio
+                </button>
+                <button onclick="startSimulation()" class="px-6 py-2 bg-slate-200 hover:bg-slate-300 rounded-lg font-medium transition-colors">
+                    Cargar
+                </button>
+                <button id="next-btn" onclick="nextStep()" class="px-8 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition-all shadow-lg active:scale-95 disabled:opacity-50">
+                    Siguiente Paso
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let n = 0;
+        let x = [];
+        let y = [];
+        let i = 1;
+        let j = 1;
+        let state = 'WHILE';
+        let isFinished = false;
+
+        const containerX = document.getElementById('container-x');
+        const containerY = document.getElementById('container-y');
+        const displayN = document.getElementById('display-n');
+        const displayI = document.getElementById('display-i');
+        const displayMod = document.getElementById('display-mod');
+        const displayLen = document.getElementById('display-len');
+        const stepDesc = document.getElementById('step-desc');
+        const nextBtn = document.getElementById('next-btn');
+        const inputN = document.getElementById('input-n');
+
+        function resetWithRandom() {
+            const randomVal = Math.floor(Math.random() * 8999) + 1000;
+            inputN.value = randomVal;
+            startSimulation();
+        }
+
+        function startSimulation() {
+            const val = parseInt(inputN.value);
+            if (isNaN(val) || val < 0) return;
+            
+            n = val;
+            x = [];
+            y = [];
+            i = 1;
+            j = 1;
+            state = 'WHILE';
+            isFinished = false;
+            nextBtn.disabled = false;
+            nextBtn.innerText = "Siguiente Paso";
+            
+            containerX.innerHTML = '';
+            containerY.innerHTML = '';
+            displayN.innerText = n;
+            displayI.innerText = i;
+            displayMod.innerText = "-";
+            displayLen.innerText = "-";
+            stepDesc.innerText = "Iniciamos el bucle 'while' mientras n > 0.";
+        }
+
+        function nextStep() {
+            if (isFinished) return;
+
+            if (state === 'WHILE') {
+                if (n > 0) {
+                    let digit = n % 10;
+                    x.push(digit);
+                    
+                    const box = document.createElement('div');
+                    box.className = 'w-10 h-10 flex items-center justify-center border-2 border-red-300 rounded highlight-x font-bold vector-box active-digit';
+                    box.innerText = digit;
+                    box.id = `x-${i-1}`;
+                    containerX.appendChild(box);
+                    
+                    setTimeout(() => box.classList.remove('active-digit'), 500);
+                    stepDesc.innerText = `x(${i}) = mod(${n}, 10) = ${digit}. Luego n = (${n} - ${digit}) / 10.`;
+                    
+                    n = (n - digit) / 10;
+                    displayN.innerText = n;
+                    displayMod.innerText = digit;
+                    displayI.innerText = i;
+                    i++;
+                } else {
+                    state = 'FOR';
+                    stepDesc.innerText = `n es 0. Fin del 'while'. Ahora invertimos x para obtener y.`;
+                    displayI.innerText = "-";
+                    displayMod.innerText = "-";
+                    displayLen.innerText = i - 1;
+                }
+            } else if (state === 'FOR') {
+                const totalElements = i - 1;
+                if (j <= totalElements) {
+                    let val = x[totalElements - j];
+                    y.push(val);
+
+                    document.querySelectorAll('.highlight-x').forEach(el => el.classList.remove('active-digit'));
+                    document.getElementById(`x-${totalElements - j}`).classList.add('active-digit');
+
+                    const box = document.createElement('div');
+                    box.className = 'w-10 h-10 flex items-center justify-center border-2 border-emerald-300 rounded highlight-y font-bold vector-box active-digit';
+                    box.innerText = val;
+                    containerY.appendChild(box);
+
+                    stepDesc.innerText = `Copiando: y(${j}) = x(${totalElements - j + 1}) = ${val}`;
+                    j++;
+                } else {
+                    state = 'FINISHED';
+                    nextStep();
+                }
+            } else if (state === 'FINISHED') {
+                isFinished = true;
+                nextBtn.disabled = true;
+                nextBtn.innerText = "Finalizado";
+                stepDesc.innerHTML = `<span class="text-indigo-600 font-bold">Algoritmo completado. Se han extraído y reordenado ${i-1} dígitos.</span>`;
+                document.querySelectorAll('.active-digit').forEach(el => el.classList.remove('active-digit'));
+            }
+        }
+
+        inputN.value = 1234;
+        startSimulation();
+    </script>
+</body>
+</html>

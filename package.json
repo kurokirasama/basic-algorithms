@@ -14,6 +14,12 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "jest": "^30.3.0"
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "babel-jest": "^30.3.0",
+    "cheerio": "^1.2.0",
+    "jest": "^30.3.0",
+    "jsdom": "^29.0.0",
+    "supertest": "^7.2.2"
   }
 }

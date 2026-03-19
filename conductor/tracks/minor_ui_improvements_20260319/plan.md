@@ -1,9 +1,9 @@
 # Track minor_ui_improvements_20260319 Implementation Plan
 
 ## Phase 1: Landing Page Glow Adjustment
-- [ ] Task: Reduce glow intensity on `index.html`
-    - [ ] Write tests to verify `text-shadow` and `box-shadow` values are reduced
-    - [ ] Update `index.html` CSS styles to reduce glow by approximately 75%
+- [x] Task: Reduce glow intensity on `index.html` c506917
+    - [x] Write tests to verify `text-shadow` and `box-shadow` values are reduced
+    - [x] Update `index.html` CSS styles to reduce glow by approximately 75%
 - [ ] Task: Conductor - User Manual Verification 'Landing Page Glow Adjustment' (Protocol in workflow.md)
 
 ## Phase 2: Algorithm Pages Style Update
@@ -13,6 +13,9 @@
 - [ ] Task: Add "Volver" button to algorithm pages
     - [ ] Write tests to verify presence and functionality of the red "Volver" button
     - [ ] Implement red neon-style "Volver" button on all algorithm pages in `WEB/`
+- [ ] Task: Update UI guides and plans in 'implement_missing_algorithms' track to match new styles
+    - [ ] Review and update `conductor/tracks/implement_missing_algorithms_20260319/spec.md`
+    - [ ] Review and update `conductor/tracks/implement_missing_algorithms_20260319/plan.md`
 - [ ] Task: Conductor - User Manual Verification 'Algorithm Pages Style Update' (Protocol in workflow.md)
 
 ## Phase 3: Final Verification

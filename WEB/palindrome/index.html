@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador: Palíndromo</title>
+    <title>Simulador: ¿Es Palíndromo?</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
     @font-face {
@@ -23,7 +23,7 @@
         .vector-box {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .highlight-x { background-color: #450a0a; border-color: #991b1b; }
+        .highlight-digit { background-color: #064e3b; border-color: #166534; }
         .neon-border {
             box-shadow: 0 0 5px #fff, 0 0 10px #a855f7, inset 0 0 5px #a855f7;
         }
@@ -35,55 +35,106 @@
     <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
         <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: ¿Es Palíndromo?</h1>
         
+        <div class="flex justify-center mb-8 gap-2" id="container-digits"></div>
+
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center bg-slate-950 p-6 rounded-xl mb-8 border border-slate-800">
             <div class="flex flex-col">
                 <span class="text-xs text-indigo-400 uppercase font-bold tracking-wider">Valor n</span>
                 <span id="display-n" class="text-3xl font-mono font-bold text-purple-300">-</span>
             </div>
             <div class="flex flex-col border-l border-slate-700 pl-4">
-                <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Valor Invertido</span>
+                <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Valor Invertido (m)</span>
                 <span id="display-m" class="text-3xl font-mono font-bold text-emerald-400">-</span>
+            </div>
+            <div class="flex flex-col border-l border-slate-700 pl-4">
+                <span class="text-xs text-red-500 uppercase font-bold tracking-wider">Dígito (mod)</span>
+                <span id="display-mod" class="text-3xl font-mono font-bold text-red-500">-</span>
             </div>
         </div>
 
         <div class="flex flex-col items-center gap-6">
             <p id="step-desc" class="text-center italic text-slate-400 min-h-[3rem] px-4 max-w-2xl">
-                Ingresa un número para verificar.
+                Ingresa un número para comenzar.
             </p>
             
             <div class="flex flex-wrap justify-center gap-4">
                 <input type="number" id="input-n" placeholder="Ej: 1221" class="px-4 py-2 bg-slate-900 text-slate-100 border-2 border-slate-700 rounded-lg focus:border-purple-500 outline-none w-32 text-center font-mono font-bold">
                 <button onclick="startSimulation()" class="border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
-                    Verificar
+                    Cargar
+                </button>
+                <button id="next-btn" onclick="nextStep()" class="border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95 disabled:opacity-50">
+                    Siguiente Paso
                 </button>
             </div>
         </div>
     </main>
 
     <script>
+        let n = 0;
+        let m = 0;
+        let temp = 0;
+        let step = 'WHILE'; // WHILE, FINISHED
+        let isFinished = false;
+
+        const containerDigits = document.getElementById('container-digits');
+        const displayN = document.getElementById('display-n');
+        const displayM = document.getElementById('display-m');
+        const displayMod = document.getElementById('display-mod');
+        const stepDesc = document.getElementById('step-desc');
+        const nextBtn = document.getElementById('next-btn');
+        const inputN = document.getElementById('input-n');
+
         function startSimulation() {
-            const n = parseInt(document.getElementById('input-n').value);
-            if (isNaN(n)) return;
+            const val = parseInt(inputN.value);
+            if (isNaN(val) || val < 0) return;
             
-            let num = n;
-            let m = 0;
-            let temp = n;
+            n = val;
+            temp = n;
+            m = 0;
+            step = 'WHILE';
+            isFinished = false;
+            nextBtn.disabled = false;
+            nextBtn.innerText = "Siguiente Paso";
             
-            while (temp > 0) {
-                m = m * 10 + (temp % 10);
+            containerDigits.innerHTML = '';
+            displayN.innerText = n;
+            displayM.innerText = 0;
+            displayMod.innerText = "-";
+            stepDesc.innerText = "Iniciamos el bucle 'while' para invertir los dígitos.";
+        }
+
+        function nextStep() {
+            if (isFinished) return;
+
+            if (temp > 0) {
+                let digit = temp % 10;
+                let oldM = m;
+                m = m * 10 + digit;
+                
+                const box = document.createElement('div');
+                box.className = 'w-10 h-10 flex items-center justify-center border-2 border-red-900 rounded highlight-digit font-bold vector-box active-digit';
+                box.innerText = digit;
+                containerDigits.appendChild(box);
+                
+                stepDesc.innerText = `Extraído: ${digit}. m = ${oldM} * 10 + ${digit} = ${m}.`;
+                
                 temp = Math.floor(temp / 10);
-            }
-            
-            document.getElementById('display-n').innerText = n;
-            document.getElementById('display-m').innerText = m;
-            
-            if (n === m) {
-                document.getElementById('step-desc').innerHTML = `<span class="text-emerald-400 font-bold text-lg">${n} es palíndromo.</span>`;
+                displayM.innerText = m;
+                displayMod.innerText = digit;
             } else {
-                document.getElementById('step-desc').innerHTML = `<span class="text-red-400 font-bold text-lg">${n} no es palíndromo.</span>`;
+                isFinished = true;
+                nextBtn.disabled = true;
+                nextBtn.innerText = "Finalizado";
+                
+                if (n === m) {
+                    stepDesc.innerHTML = `<span class="text-emerald-400 font-bold text-lg">${n} == ${m}: Es palíndromo.</span>`;
+                } else {
+                    stepDesc.innerHTML = `<span class="text-red-400 font-bold text-lg">${n} != ${m}: No es palíndromo.</span>`;
+                }
             }
         }
-        document.getElementById('input-n').value = 1221;
+
+        inputN.value = 1221;
         startSimulation();
     </script>
 </body>

@@ -1,7 +1,7 @@
 # Track minor_ui_improvements_20260319 Implementation Plan
 
 ## Phase 1: Landing Page Glow Adjustment
-- [x] Task: Reduce glow intensity on `index.html` c506917
+- [x] Task: Reduce glow intensity on `index.html` ee45ebe
     - [x] Write tests to verify `text-shadow` and `box-shadow` values are reduced
     - [x] Update `index.html` CSS styles to reduce glow by approximately 75%
 - [ ] Task: Conductor - User Manual Verification 'Landing Page Glow Adjustment' (Protocol in workflow.md)

@@ -52,6 +52,9 @@
             </p>
             
             <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="randomize()" class="border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
+                    Aleatorio
+                </button>
                 <button onclick="resetSimulation()" class="border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
                     Reiniciar
                 </button>
@@ -83,6 +86,11 @@
                 div.innerText = num;
                 containerX.appendChild(div);
             });
+        }
+
+        function randomize() {
+            x = Array.from({ length: 5 }, () => Math.floor(Math.random() * 10) - 4);
+            resetSimulation();
         }
 
         function resetSimulation() {

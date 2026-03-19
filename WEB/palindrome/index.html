@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador: Palíndromo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    @font-face {
+      font-family: 'Monocraft';
+      src: url('https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: 'Monocraft', monospace;
+    }
+        .active-digit {
+            border: 4px solid #ef4444 !important;
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        .vector-box {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .highlight-x { background-color: #450a0a; border-color: #991b1b; }
+        .neon-border {
+            box-shadow: 0 0 5px #fff, 0 0 10px #a855f7, inset 0 0 5px #a855f7;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-4xl p-4"><a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded mb-4 transition duration-300 neon-border">Volver</a></div>
+
+    <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+        <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: ¿Es Palíndromo?</h1>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center bg-slate-950 p-6 rounded-xl mb-8 border border-slate-800">
+            <div class="flex flex-col">
+                <span class="text-xs text-indigo-400 uppercase font-bold tracking-wider">Valor n</span>
+                <span id="display-n" class="text-3xl font-mono font-bold text-purple-300">-</span>
+            </div>
+            <div class="flex flex-col border-l border-slate-700 pl-4">
+                <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Valor Invertido</span>
+                <span id="display-m" class="text-3xl font-mono font-bold text-emerald-400">-</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center gap-6">
+            <p id="step-desc" class="text-center italic text-slate-400 min-h-[3rem] px-4 max-w-2xl">
+                Ingresa un número para verificar.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <input type="number" id="input-n" placeholder="Ej: 1221" class="px-4 py-2 bg-slate-900 text-slate-100 border-2 border-slate-700 rounded-lg focus:border-purple-500 outline-none w-32 text-center font-mono font-bold">
+                <button onclick="startSimulation()" class="border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
+                    Verificar
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function startSimulation() {
+            const n = parseInt(document.getElementById('input-n').value);
+            if (isNaN(n)) return;
+            
+            let num = n;
+            let m = 0;
+            let temp = n;
+            
+            while (temp > 0) {
+                m = m * 10 + (temp % 10);
+                temp = Math.floor(temp / 10);
+            }
+            
+            document.getElementById('display-n').innerText = n;
+            document.getElementById('display-m').innerText = m;
+            
+            if (n === m) {
+                document.getElementById('step-desc').innerHTML = `<span class="text-emerald-400 font-bold text-lg">${n} es palíndromo.</span>`;
+            } else {
+                document.getElementById('step-desc').innerHTML = `<span class="text-red-400 font-bold text-lg">${n} no es palíndromo.</span>`;
+            }
+        }
+        document.getElementById('input-n').value = 1221;
+        startSimulation();
+    </script>
+</body>
+</html>

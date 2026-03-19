@@ -60,8 +60,24 @@ function reverse_digits(n) {
   return { digits: x, count: i };
 }
 
+/**
+ * Determines if a number is a palindrome.
+ * @param {number} n The input number.
+ * @returns {boolean} True if palindrome, false otherwise.
+ */
+function palindrome(n) {
+  const { digits } = reverse_digits(n);
+  let m = 0;
+  let i = digits.length;
+  for (let j = 0; j < i; j++) {
+    m = m + digits[j] * Math.pow(10, i - 1 - j);
+  }
+  return n === m;
+}
+
 module.exports = {
   minimo,
   sort_desc,
   reverse_digits,
+  palindrome,
 };

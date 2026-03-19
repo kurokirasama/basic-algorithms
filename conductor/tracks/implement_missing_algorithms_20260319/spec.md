@@ -15,14 +15,17 @@ This track involves implementing the remaining 8 algorithm simulations defined i
 
 ## Non-Functional Requirements
 - **Styling:** Use Tailwind CSS for rapid UI development and modern aesthetics.
-- **Consistency:** Maintain the indigo/slate theme and interactive "Siguiente Paso" pattern.
+- **Consistency:** Maintain the Cyberpunk/Dark theme (bg-slate-950, text-slate-100, neon borders/glows).
+- **Navigation:** Each page MUST include a red "Volver" button at the top-left for returning to the root dashboard.
 - **Responsiveness:** Ensure each page works across different screen sizes.
 - **TDD:** Implement tests for each algorithm's core logic.
 
 ## Acceptance Criteria
 - Each algorithm has its own directory in `WEB/` (e.g., `WEB/minimo/index.html`).
-- Each page features an "Interactive Simulation" mode with a "Siguiente Paso" button and step descriptions.
-- The Matrix simulation uses a grid/table layout for the n x n matrix.
+- Each page features:
+    - Interactive Simulation mode with "Siguiente Paso".
+    - A red "Volver" button navigating to root index.html.
+    - Dark theme (bg-slate-950) consistent with the landing page.
 - All algorithms correctly implement the logic from `pseudocodigos.md`.
 - Code coverage for new implementations exceeds 80%.
 

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador: Función a Trozos</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include MathJax for LaTeX rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
     @font-face {
       font-family: 'Monocraft';
@@ -29,8 +32,9 @@
         <div class="grid grid-cols-1 gap-6 text-center bg-slate-950 p-6 rounded-xl mb-8 border border-slate-800">
             <div>
                 <h2 class="text-sm font-bold text-slate-400 uppercase mb-2">Definición de f(x)</h2>
+                <!-- LaTeX rendering -->
                 <div class="font-mono text-lg text-slate-300">
-                    f(x) = { x² si x ≤ -1;  x si -1 < x < 1;  x³ si x ≥ 1 }
+                    $$ f(x) = \begin{cases} x^2 & \text{si } x \le -1 \\ x & \text{si } -1 < x < 1 \\ x^3 & \text{si } x \ge 1 \end{cases} $$
                 </div>
             </div>
             <div class="border-t border-slate-800 pt-4">

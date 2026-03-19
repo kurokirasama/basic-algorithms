@@ -1,15 +1,15 @@
 # Implementation Plan: Missing Algorithm Simulations
 
 ## Phase 1: Simple Algorithms (Minimo, Sort Descend)
-- [x] Task: Minimo - TDD Implementation 4642d6d
+- [x] Task: Minimo - TDD Implementation
     - [x] Write failing unit tests for 'minimo' logic in `tests/minimo.test.js`
     - [x] Implement 'minimo' logic to pass tests
     - [x] Create interactive simulation page in `WEB/minimo/index.html` (Cyberpunk/Dark theme + Volver button)
-- [x] Task: Sort Descend - TDD Implementation 61a4210
+- [x] Task: Sort Descend - TDD Implementation
     - [x] Write failing unit tests for 'sort_desc' logic in `tests/sort_desc.test.js`
     - [x] Implement 'sort_desc' logic to pass tests
     - [x] Create interactive simulation page in `WEB/sort_desc/index.html` (Cyberpunk/Dark theme + Volver button)
-- [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Digits-Based Algorithms (Reverse Digits, Palindrome)
 - [ ] Task: Reverse Digits - TDD Implementation

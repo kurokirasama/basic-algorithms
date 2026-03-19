@@ -39,7 +39,29 @@ function sort_desc(x) {
   return x;
 }
 
+/**
+ * Extracts and reverses the digits of a number.
+ * @param {number} n The input number.
+ * @returns {{digits: number[], count: number}} The reversed digits and count.
+ */
+function reverse_digits(n) {
+  if (n === 0) return { digits: [0], count: 1 };
+  
+  let x = [];
+  let num = n;
+  let i = 0;
+  
+  while (num > 0) {
+    x[i] = num % 10;
+    num = Math.floor(num / 10);
+    i++;
+  }
+  
+  return { digits: x, count: i };
+}
+
 module.exports = {
   minimo,
   sort_desc,
+  reverse_digits,
 };

@@ -23,10 +23,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md) [checkpoint: da8bb9a]
 
 ## Phase 3: Mathematical & Piece-wise Algorithms (Piece-wise, Vector Piece-wise)
-- [ ] Task: Piece-wise Function - TDD Implementation
-    - [ ] Write failing unit tests for 'piecewise' logic in `tests/piecewise.test.js`
-    - [ ] Implement 'piecewise' logic to pass tests
-    - [ ] Create interactive simulation page in `WEB/piecewise/index.html` (Cyberpunk/Dark theme + Volver button)
+- [x] Task: Piece-wise Function - TDD Implementation 7223e9d
+    - [x] Write failing unit tests for 'piecewise' logic in `tests/piecewise.test.js`
+    - [x] Implement 'piecewise' logic to pass tests
+    - [x] Create interactive simulation page in `WEB/piecewise/index.html` (Cyberpunk/Dark theme + Volver button)
 - [ ] Task: Vector Piece-wise Function - TDD Implementation
     - [ ] Write failing unit tests for 'vector_piecewise' logic in `tests/vector_piecewise.test.js`
     - [ ] Implement 'vector_piecewise' logic to pass tests

@@ -33,36 +33,36 @@
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4">
     <div class="w-full max-w-4xl p-4"><a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded mb-4 transition duration-300 neon-border">Volver</a></div>
 
-    <main class="w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
-        <h1 class="text-2xl font-bold text-center mb-8 text-indigo-700">Simulación: Cálculo de la Mediana</h1>
+    <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+        <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: Cálculo de la Mediana</h1>
         
         <!-- Contenedor del Vector -->
         <div class="flex flex-wrap justify-center gap-3 mb-10" id="array-container"></div>
 
         <!-- Panel de Estado -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center bg-slate-100 p-6 rounded-xl mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center bg-slate-950 p-6 rounded-xl mb-8">
             <div class="flex flex-col">
                 <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Longitud (n)</span>
                 <span id="display-n" class="text-3xl font-mono font-semibold">-</span>
             </div>
             <div class="flex flex-col border-t md:border-t-0 md:border-l border-slate-200 pt-4 md:pt-0">
-                <span class="text-xs text-indigo-600 uppercase font-bold tracking-wider">Tipo (Par/Impar)</span>
+                <span class="text-xs text-indigo-400 uppercase font-bold tracking-wider">Tipo (Par/Impar)</span>
                 <span id="display-type" class="text-3xl font-mono font-bold text-indigo-600">-</span>
             </div>
             <div class="flex flex-col border-t md:border-t-0 md:border-l border-slate-200 pt-4 md:pt-0">
-                <span class="text-xs text-emerald-600 uppercase font-bold tracking-wider">Mediana Final</span>
+                <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Mediana Final</span>
                 <span id="display-median" class="text-4xl font-mono font-bold text-emerald-600">-</span>
             </div>
         </div>
 
         <!-- Controles -->
         <div class="flex flex-col items-center gap-6">
-            <p id="step-desc" class="text-center italic text-slate-600 min-h-[3rem] px-4 max-w-2xl">
+            <p id="step-desc" class="text-center italic text-slate-400 min-h-[3rem] px-4 max-w-2xl">
                 Presiona "Siguiente Paso" para comenzar con el vector desordenado.
             </p>
             
             <div class="flex gap-4">
-                <button onclick="resetSimulation()" class="px-6 py-2 bg-slate-200 hover:bg-slate-300 rounded-lg font-medium transition-colors">
+                <button onclick="resetSimulation()" class="px-6 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg font-medium transition-colors">
                     Nuevo Vector (Aleatorio)
                 </button>
                 <button id="next-btn" onclick="nextStep()" class="px-8 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition-all shadow-lg active:scale-95">
@@ -94,7 +94,7 @@
             numbers.forEach((num, index) => {
                 const div = document.createElement('div');
                 div.id = `box-${index}`;
-                div.className = 'w-14 h-14 md:w-16 md:h-16 flex items-center justify-center bg-white border-2 border-slate-300 rounded-lg text-xl font-bold shadow-sm transition-all duration-500';
+                div.className = 'w-14 h-14 md:w-16 md:h-16 flex items-center justify-center bg-slate-800 border-2 border-slate-700 text-slate-100 rounded-lg text-xl font-bold shadow-sm transition-all duration-500';
                 div.innerText = num;
                 arrayContainer.appendChild(div);
             });

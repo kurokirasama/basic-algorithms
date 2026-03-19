@@ -12,10 +12,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Digits-Based Algorithms (Reverse Digits, Palindrome)
-- [x] Task: Reverse Digits - TDD Implementation bddf311
+- [x] Task: Reverse Digits - TDD Implementation 75ae6f7
     - [x] Write failing unit tests for 'reverse_digits' logic in `tests/reverse_digits.test.js`
     - [x] Implement 'reverse_digits' logic to pass tests
-    - [x] Create interactive simulation page in `WEB/reverse_digits/index.html` (Cyberpunk/Dark theme + Volver button + Random input)
+    - [x] Create interactive simulation page in `WEB/reverse_digits/index.html` (Cyberpunk/Dark theme + Volver button + Random input + UI simplified)
 - [ ] Task: Palindrome - TDD Implementation
     - [ ] Write failing unit tests for 'palindrome' logic in `tests/palindrome.test.js`
     - [ ] Implement 'palindrome' logic to pass tests

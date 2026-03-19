@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador: Ordenar Ascendente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    @font-face {
+      font-family: 'Monocraft';
+      src: url('https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: 'Monocraft', monospace;
+    }
+        .active-element {
+            border: 4px solid #ef4444 !important;
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        .sorting-highlight {
+            border: 4px solid #3b82f6 !important;
+            background-color: #172554 !important;
+        }
+        .result-highlight {
+            background-color: #166534 !important;
+            border-color: #166534 !important;
+            color: white;
+        }
+        .transition-all {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .neon-border {
+            box-shadow: 0 0 5px #fff, 0 0 10px #a855f7, inset 0 0 5px #a855f7;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-4xl p-4"><a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded mb-4 transition duration-300 neon-border">Volver</a></div>
+
+    <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+        <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: Ordenamiento (Selection Sort)</h1>
+        
+        <!-- Contenedor del Vector -->
+        <div class="flex flex-wrap justify-center gap-3 mb-10" id="array-container">
+            <!-- Elementos generados dinámicamente -->
+        </div>
+
+        <!-- Panel de Estado -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center bg-slate-950 p-6 rounded-xl mb-8 border border-slate-800">
+            <div class="flex flex-col">
+                <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Posición (i)</span>
+                <span id="display-i" class="text-3xl font-mono font-semibold">-</span>
+            </div>
+            <div class="flex flex-col border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0">
+                <span class="text-xs text-indigo-400 uppercase font-bold tracking-wider">Buscando (j)</span>
+                <span id="display-j" class="text-3xl font-mono font-bold text-indigo-400">-</span>
+            </div>
+            <div class="flex flex-col border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0">
+                <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Índice Máx</span>
+                <span id="display-max-idx" class="text-3xl font-mono font-bold text-slate-400">-</span>
+            </div>
+            <div class="flex flex-col border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0">
+                <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Valor Máx</span>
+                <span id="display-max-val" class="text-4xl font-mono font-bold text-emerald-400">-</span>
+            </div>
+        </div>
+
+        <!-- Controles -->
+        <div class="flex flex-col items-center gap-6">
+            <p id="step-desc" class="text-center italic text-slate-400 min-h-[3rem] px-4 max-w-2xl">
+                Presiona "Siguiente Paso" para comenzar el ordenamiento.
+            </p>
+            
+            <div class="flex gap-4">
+                <button onclick="resetSimulation()" class="border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
+                    Reiniciar (Aleatorio)
+                </button>
+                <button id="next-btn" onclick="nextStep()" class="border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95">
+                    Siguiente Paso
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let numbers = [];
+        let i = 0;
+        let j = 0;
+        let max_i = 0;
+        let step = 'INIT_I'; // INIT_I, LOOP_J, SWAP, FINISHED
+        let isFinished = false;
+
+        const arrayContainer = document.getElementById('array-container');
+        const displayI = document.getElementById('display-i');
+        const displayJ = document.getElementById('display-j');
+        const displayMaxIdx = document.getElementById('display-max-idx');
+        const displayMaxVal = document.getElementById('display-max-val');
+        const stepDesc = document.getElementById('step-desc');
+        const nextBtn = document.getElementById('next-btn');
+
+        function generateRandomArray() {
+            const size = 7;
+            numbers = Array.from({ length: size }, () => Math.floor(Math.random() * 99) + 1);
+        }
+
+        function initArrayUI() {
+            arrayContainer.innerHTML = '';
+            numbers.forEach((num, index) => {
+                const div = document.createElement('div');
+                div.id = `box-${index}`;
+                div.className = 'w-14 h-14 md:w-16 md:h-16 flex items-center justify-center bg-slate-800 border-2 border-slate-700 text-slate-100 rounded-lg text-xl font-bold shadow-sm transition-all duration-300';
+                div.innerText = num;
+                arrayContainer.appendChild(div);
+            });
+        }
+
+        function resetSimulation() {
+            generateRandomArray();
+            i = 0;
+            j = 1;
+            max_i = 0;
+            step = 'INIT_I';
+            isFinished = false;
+            nextBtn.disabled = false;
+            nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            nextBtn.innerText = "Siguiente Paso";
+            displayI.innerText = "-";
+            displayJ.innerText = "-";
+            displayMaxIdx.innerText = "-";
+            displayMaxVal.innerText = "-";
+            stepDesc.innerText = "Vector generado. Empezamos a ordenar.";
+            initArrayUI();
+        }
+
+        function nextStep() {
+            if (isFinished) return;
+
+            if (step === 'INIT_I') {
+                if (i < numbers.length - 1) {
+                    max_i = i;
+                    j = i + 1;
+                    step = 'LOOP_J';
+                    stepDesc.innerText = `Posición i=${i+1}. Buscamos el máximo desde j=${j+1}.`;
+                    displayI.innerText = i + 1;
+                    displayMaxIdx.innerText = max_i + 1;
+                    displayMaxVal.innerText = numbers[max_i];
+                    render();
+                } else {
+                    step = 'FINISHED';
+                    nextStep();
+                }
+            } else if (step === 'LOOP_J') {
+                if (j < numbers.length) {
+                    if (numbers[max_i] < numbers[j]) {
+                        max_i = j;
+                        displayMaxIdx.innerText = max_i + 1;
+                        displayMaxVal.innerText = numbers[max_i];
+                        stepDesc.innerText = `x(j)=${numbers[j]} > max=x(max_i). Nuevo máximo en j=${j+1}.`;
+                    } else {
+                        stepDesc.innerText = `x(j)=${numbers[j]} <= max. Seguimos.`;
+                    }
+                    displayJ.innerText = j + 1;
+                    render();
+                    j++;
+                } else {
+                    step = 'SWAP';
+                    nextStep();
+                }
+            } else if (step === 'SWAP') {
+                let temp = numbers[i];
+                numbers[i] = numbers[max_i];
+                numbers[max_i] = temp;
+                stepDesc.innerText = `Intercambiamos x(i) y x(max_i).`;
+                initArrayUI();
+                render();
+                i++;
+                step = 'INIT_I';
+            } else if (step === 'FINISHED') {
+                isFinished = true;
+                nextBtn.disabled = true;
+                nextBtn.innerText = "Finalizado";
+                stepDesc.innerHTML = `<span class="text-purple-400 font-bold text-lg">Vector ordenado completamente.</span>`;
+                document.querySelectorAll('.active-element').forEach(el => el.classList.remove('active-element'));
+                document.querySelectorAll('.sorting-highlight').forEach(el => el.classList.remove('sorting-highlight'));
+            }
+        }
+
+        function render() {
+            for (let k = 0; k < numbers.length; k++) {
+                const box = document.getElementById(`box-${k}`);
+                box.classList.remove('active-element', 'sorting-highlight');
+                if (k === i) box.classList.add('active-element');
+                if (step === 'LOOP_J' && k === j) box.classList.add('sorting-highlight');
+                if (k === max_i) box.classList.add('sorting-highlight');
+                box.innerText = numbers[k];
+            }
+        }
+
+        resetSimulation();
+    </script>
+</body>
+</html>

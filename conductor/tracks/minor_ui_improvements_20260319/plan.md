@@ -13,9 +13,9 @@
 - [x] Task: Add "Volver" button to algorithm pages 72cb2e7
     - [x] Write tests to verify presence and functionality of the red "Volver" button
     - [x] Implement red neon-style "Volver" button on all algorithm pages in `WEB/`
-- [ ] Task: Update UI guides and plans in 'implement_missing_algorithms' track to match new styles
-    - [ ] Review and update `conductor/tracks/implement_missing_algorithms_20260319/spec.md`
-    - [ ] Review and update `conductor/tracks/implement_missing_algorithms_20260319/plan.md`
+- [x] Task: Update UI guides and plans in 'implement_missing_algorithms' track to match new styles
+    - [x] Review and update `conductor/tracks/implement_missing_algorithms_20260319/spec.md`
+    - [x] Review and update `conductor/tracks/implement_missing_algorithms_20260319/plan.md`
 - [ ] Task: Conductor - User Manual Verification 'Algorithm Pages Style Update' (Protocol in workflow.md)
 
 ## Phase 3: Final Verification

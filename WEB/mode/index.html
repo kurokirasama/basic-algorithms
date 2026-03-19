@@ -6,6 +6,15 @@
     <title>Simulador: Cálculo de la Moda</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+    @font-face {
+      font-family: 'Monocraft';
+      src: url('https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: 'Monocraft', monospace;
+    }
         .puntero-i {
             border: 4px solid #3b82f6 !important; /* Azul para el elemento base i */
             transform: scale(1.05);
@@ -16,8 +25,8 @@
             z-index: 10;
         }
         .match-found {
-            background-color: #dcfce7 !important;
-            border-color: #22c55e !important;
+            background-color: #064e3b !important;
+            border-color: #166534 !important;
         }
         .mode-current {
             background-color: #10b981 !important;
@@ -65,10 +74,10 @@
             </p>
             
             <div class="flex gap-4">
-                <button onclick="resetSimulation()" class="px-6 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg font-medium transition-colors">
+                <button onclick="resetSimulation()" class="px-6 py-2 border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
                     Nuevo Vector (Aleatorio)
                 </button>
-                <button id="next-btn" onclick="nextStep()" class="px-8 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold transition-all shadow-lg active:scale-95">
+                <button id="next-btn" onclick="nextStep()" class="px-8 py-2 border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95">
                     Siguiente Paso
                 </button>
             </div>

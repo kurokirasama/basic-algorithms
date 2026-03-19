@@ -1,15 +1,15 @@
 # Implementation Plan: Missing Algorithm Simulations
 
 ## Phase 1: Simple Algorithms (Minimo, Sort Descend)
-- [x] Task: Minimo - TDD Implementation
+- [x] Task: Minimo - TDD Implementation 4642d6d
     - [x] Write failing unit tests for 'minimo' logic in `tests/minimo.test.js`
     - [x] Implement 'minimo' logic to pass tests
     - [x] Create interactive simulation page in `WEB/minimo/index.html` (Cyberpunk/Dark theme + Volver button)
-- [x] Task: Sort Descend - TDD Implementation
+- [x] Task: Sort Descend - TDD Implementation 61a4210
     - [x] Write failing unit tests for 'sort_desc' logic in `tests/sort_desc.test.js`
     - [x] Implement 'sort_desc' logic to pass tests
     - [x] Create interactive simulation page in `WEB/sort_desc/index.html` (Cyberpunk/Dark theme + Volver button)
-- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md) [checkpoint: 0b11803]
 
 ## Phase 2: Digits-Based Algorithms (Reverse Digits, Palindrome)
 - [x] Task: Reverse Digits - TDD Implementation 75ae6f7
@@ -22,16 +22,16 @@
     - [x] Create interactive simulation page in `WEB/palindrome/index.html` (Cyberpunk/Dark theme + Volver button + Step-by-step logic)
 - [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md) [checkpoint: da8bb9a]
 
-## Phase 3: Mathematical & Piece-wise Algorithms (Piece-wise, Vector Piece-wise)
-- [x] Task: Piece-wise Function - TDD Implementation 7223e9d
+## Phase 3: Mathematical & Piece-wise Algorithms (Piece-wise, Vector Piece-wise) [checkpoint: 69da8e0]
+- [x] Task: Piece-wise Function - TDD Implementation 605853d
     - [x] Write failing unit tests for 'piecewise' logic in `tests/piecewise.test.js`
     - [x] Implement 'piecewise' logic to pass tests
-    - [x] Create interactive simulation page in `WEB/piecewise/index.html` (Cyberpunk/Dark theme + Volver button)
+    - [x] Create interactive simulation page in `WEB/piecewise/index.html` (Cyberpunk/Dark theme + Volver button + MathJax)
 - [ ] Task: Vector Piece-wise Function - TDD Implementation
     - [ ] Write failing unit tests for 'vector_piecewise' logic in `tests/vector_piecewise.test.js`
     - [ ] Implement 'vector_piecewise' logic to pass tests
     - [ ] Create interactive simulation page in `WEB/vector_piecewise/index.html` (Cyberpunk/Dark theme + Volver button)
-- [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md) [checkpoint: 69da8e0]
 
 ## Phase 4: Matrix & RUT Algorithms (Tridiagonal Matrix, RUT DV)
 - [ ] Task: Tridiagonal Matrix - TDD Implementation

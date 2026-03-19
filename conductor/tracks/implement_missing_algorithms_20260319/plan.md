@@ -27,10 +27,10 @@
     - [x] Write failing unit tests for 'piecewise' logic in `tests/piecewise.test.js`
     - [x] Implement 'piecewise' logic to pass tests
     - [x] Create interactive simulation page in `WEB/piecewise/index.html` (Cyberpunk/Dark theme + Volver button + MathJax)
-- [x] Task: Vector Piece-wise Function - TDD Implementation 369dd02
+- [x] Task: Vector Piece-wise Function - TDD Implementation 1da7a95
     - [x] Write failing unit tests for 'vector_piecewise' logic in `tests/vector_piecewise.test.js`
     - [x] Implement 'vector_piecewise' logic to pass tests
-    - [x] Create interactive simulation page in `WEB/vector_piecewise/index.html` (Cyberpunk/Dark theme + Volver button)
+    - [x] Create interactive simulation page in `WEB/vector_piecewise/index.html` (Cyberpunk/Dark theme + Volver button + Random input)
 - [x] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md) [checkpoint: 69da8e0]
 
 ## Phase 4: Matrix & RUT Algorithms (Tridiagonal Matrix, RUT DV)
@@ -46,5 +46,6 @@
 
 ## Phase 5: Landing Page Integration & Final Review
 - [ ] Task: Update landing page index.html to include all new algorithms (ensure consistent styling)
+    - [ ] Add "Función a Trozos Vectorial" to landing page
 - [ ] Task: Perform final regression testing of all simulations
 - [ ] Task: Conductor - User Manual Verification 'Phase 5' (Protocol in workflow.md)

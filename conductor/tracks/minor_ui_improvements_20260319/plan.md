@@ -4,7 +4,7 @@
 - [x] Task: Reduce glow intensity on `index.html` ee45ebe
     - [x] Write tests to verify `text-shadow` and `box-shadow` values are reduced
     - [x] Update `index.html` CSS styles to reduce glow by approximately 75%
-- [ ] Task: Conductor - User Manual Verification 'Landing Page Glow Adjustment' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Landing Page Glow Adjustment' (Protocol in workflow.md) [checkpoint: 13b7383]
 
 ## Phase 2: Algorithm Pages Style Update
 - [ ] Task: Update background and text color on algorithm pages

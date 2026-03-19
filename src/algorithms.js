@@ -90,10 +90,25 @@ function piecewise(x) {
   }
 }
 
+/**
+ * Evaluates a piece-wise function for each element of a vector.
+ * @param {number[]} x The input array.
+ * @param {number} n The length of the array.
+ * @returns {number[]} The transformed array.
+ */
+function vector_piecewise(x, n) {
+  let y = [];
+  for (let i = 0; i < n; i++) {
+    y[i] = piecewise(x[i]);
+  }
+  return y;
+}
+
 module.exports = {
   minimo,
   sort_desc,
   reverse_digits,
   palindrome,
   piecewise,
+  vector_piecewise,
 };

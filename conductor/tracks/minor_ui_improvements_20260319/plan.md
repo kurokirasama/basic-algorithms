@@ -10,9 +10,9 @@
 - [x] Task: Update background and text color on algorithm pages 4dd9a78
     - [x] Write tests to verify `bg-slate-950` and legibility on simulation pages
     - [x] Update `bg-slate-950` and `text-slate-100` on all algorithm pages in `WEB/`
-- [ ] Task: Add "Volver" button to algorithm pages
-    - [ ] Write tests to verify presence and functionality of the red "Volver" button
-    - [ ] Implement red neon-style "Volver" button on all algorithm pages in `WEB/`
+- [x] Task: Add "Volver" button to algorithm pages 72cb2e7
+    - [x] Write tests to verify presence and functionality of the red "Volver" button
+    - [x] Implement red neon-style "Volver" button on all algorithm pages in `WEB/`
 - [ ] Task: Update UI guides and plans in 'implement_missing_algorithms' track to match new styles
     - [ ] Review and update `conductor/tracks/implement_missing_algorithms_20260319/spec.md`
     - [ ] Review and update `conductor/tracks/implement_missing_algorithms_20260319/plan.md`

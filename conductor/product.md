@@ -11,4 +11,5 @@ Algorithm Simulations Suite is a collection of interactive visualizations demons
     - Maximum Value
     - All Digits Analysis
     - Ascending Sort
+- **Pseudocode Display:** Interactive split-screen view showing the algorithm's logic alongside the simulation.
 - **Responsive Design:** Clean, modern interface styled with Tailwind CSS.

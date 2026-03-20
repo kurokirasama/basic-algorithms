@@ -38,10 +38,10 @@
     - [x] Write failing unit tests for 'tridiagonal' logic in `tests/tridiagonal.test.js`
     - [x] Implement 'tridiagonal' logic to pass tests
     - [x] Create interactive simulation page in `WEB/tridiagonal/index.html` (Cyberpunk/Dark theme + Volver button + Random input + Step-by-step logic)
-- [x] Task: RUT Verification Digit - TDD Implementation 5250b3c
+- [x] Task: RUT Verification Digit - TDD Implementation db171de
     - [x] Write failing unit tests for 'rut_dv' logic in `tests/rut_dv.test.js`
     - [x] Implement 'rut_dv' logic to pass tests
-    - [x] Create interactive simulation page in `WEB/rut_dv/index.html` (Cyberpunk/Dark theme + Volver button)
+    - [x] Create interactive simulation page in `WEB/rut_dv/index.html` (Cyberpunk/Dark theme + Volver button + Step-by-step logic + UI Alignment)
 - [x] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md) [checkpoint: a97d94f]
 
 ## Phase 5: Landing Page Integration & Final Review

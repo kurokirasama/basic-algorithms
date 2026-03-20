@@ -34,10 +34,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md) [checkpoint: 69da8e0]
 
 ## Phase 4: Matrix & RUT Algorithms (Tridiagonal Matrix, RUT DV)
-- [x] Task: Tridiagonal Matrix - TDD Implementation ebfc1f0
+- [x] Task: Tridiagonal Matrix - TDD Implementation f188471
     - [x] Write failing unit tests for 'tridiagonal' logic in `tests/tridiagonal.test.js`
     - [x] Implement 'tridiagonal' logic to pass tests
-    - [x] Create interactive simulation page in `WEB/tridiagonal/index.html` (Cyberpunk/Dark theme + Volver button + Random input + UI labels)
+    - [x] Create interactive simulation page in `WEB/tridiagonal/index.html` (Cyberpunk/Dark theme + Volver button + Random input + Step-by-step logic)
 - [ ] Task: RUT Verification Digit - TDD Implementation
     - [ ] Write failing unit tests for 'rut_dv' logic in `tests/rut_dv.test.js`
     - [ ] Implement 'rut_dv' logic to pass tests

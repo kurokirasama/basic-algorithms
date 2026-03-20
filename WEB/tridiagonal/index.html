@@ -60,7 +60,7 @@
     </main>
 
     <script>
-        let a, b, c, n, A, i, j, step;
+        let a, b, c, n, A, r, col, step;
         const container = document.getElementById('matrix-container');
 
         function randomize() {
@@ -78,7 +78,7 @@
             n = parseInt(document.getElementById('input-n').value);
             
             A = Array.from({ length: n }, () => Array(n).fill(0));
-            i = 0; j = 0;
+            r = 0; col = 0;
             step = 'FILL_DIAG'; // FILL_DIAG, FILL_UPPER, FILL_LOWER, FINISHED
             
             document.getElementById('next-btn').disabled = false;
@@ -93,12 +93,12 @@
             table.style.gridTemplateColumns = `repeat(${n}, 50px)`;
             table.style.gap = '2px';
             
-            for (let r = 0; r < n; r++) {
-                for (let c = 0; c < n; c++) {
+            for (let row = 0; row < n; row++) {
+                for (let c_idx = 0; c_idx < n; c_idx++) {
                     const cell = document.createElement('div');
                     cell.className = 'matrix-cell';
-                    if (r === i && c === j) cell.classList.add('active-cell');
-                    cell.innerText = A[r][c];
+                    if (row === r && c_idx === col) cell.classList.add('active-cell');
+                    cell.innerText = A[row][c_idx];
                     table.appendChild(cell);
                 }
             }
@@ -107,6 +107,7 @@
 
         function nextStep() {
             if (step === 'FILL_DIAG') {
+                r = i; col = i;
                 A[i][i] = a;
                 document.getElementById('step-desc').innerText = `A(${i+1},${i+1}) = a = ${a}`;
                 i++;
@@ -114,6 +115,7 @@
                 render();
             } else if (step === 'FILL_UPPER') {
                 if (i < n - 1) {
+                    r = i; col = i+1;
                     A[i][i+1] = b;
                     document.getElementById('step-desc').innerText = `A(${i+1},${i+2}) = b = ${b}`;
                     i++;
@@ -123,17 +125,21 @@
                 }
             } else if (step === 'FILL_LOWER') {
                 if (i < n) {
+                    r = i; col = i-1;
                     A[i][i-1] = c;
                     document.getElementById('step-desc').innerText = `A(${i+1},${i}) = c = ${c}`;
                     i++;
                     render();
                 } else {
                     step = 'FINISHED';
+                    r = -1; col = -1;
                     document.getElementById('step-desc').innerText = "Matriz completa.";
                     document.getElementById('next-btn').disabled = true;
+                    render();
                 }
             }
         }
+        let i = 0;
         resetSimulation();
     </script>
 </body>

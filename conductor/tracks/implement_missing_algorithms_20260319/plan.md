@@ -42,7 +42,7 @@
     - [ ] Write failing unit tests for 'rut_dv' logic in `tests/rut_dv.test.js`
     - [ ] Implement 'rut_dv' logic to pass tests
     - [ ] Create interactive simulation page in `WEB/rut_dv/index.html` (Cyberpunk/Dark theme + Volver button)
-- [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md) [checkpoint: a97d94f]
 
 ## Phase 5: Landing Page Integration & Final Review
 - [ ] Task: Update landing page index.html to include all new algorithms (ensure consistent styling)

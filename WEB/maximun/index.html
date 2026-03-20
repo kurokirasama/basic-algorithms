@@ -31,52 +31,76 @@
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="w-full max-w-4xl p-4"><a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded mb-4 transition duration-300 neon-border">Volver</a></div>
+    <div class="w-full max-w-6xl p-4 flex justify-between items-center">
+        <a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded transition duration-300 neon-border">Volver</a>
+        <button id="toggle-pseudocode" class="lg:hidden border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-4 rounded transition duration-300 neon-border">
+            Pseudocódigo
+        </button>
+    </div>
 
-    <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
-        <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: Encontrar el Valor Máximo</h1>
-        
-        <!-- Contenedor del Vector -->
-        <div class="flex flex-wrap justify-center gap-3 mb-10" id="array-container">
-            <!-- Los elementos se generan dinámicamente -->
-        </div>
-
-        <!-- Panel de Estado -->
-        <div class="flex flex-wrap md:flex-nowrap items-center justify-between gap-4 text-center bg-slate-950 p-6 rounded-xl mb-8">
-            <div class="flex-1 min-w-[100px] flex flex-col">
-                <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Índice (i)</span>
-                <span id="display-i" class="text-3xl font-mono font-semibold">-</span>
-            </div>
-            <div class="flex-1 min-w-[100px] flex flex-col">
-                <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Valor x(i)</span>
-                <span id="display-val" class="text-3xl font-mono font-semibold text-red-500">-</span>
-            </div>
-            <div class="flex-1 min-w-[100px] flex flex-col md:border-l border-slate-800">
-                <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Máximo Anterior</span>
-                <span id="display-prev-max" class="text-3xl font-mono font-semibold text-slate-500">-</span>
-            </div>
-            <div class="flex-1 min-w-[100px] flex flex-col md:border-l border-slate-800">
-                <span class="text-xs text-indigo-400 uppercase font-bold tracking-wider">Máximo Actual</span>
-                <span id="display-max" class="text-4xl font-mono font-bold text-emerald-400">-</span>
-            </div>
-        </div>
-
-        <!-- Controles -->
-        <div class="flex flex-col items-center gap-6">
-            <p id="step-desc" class="text-center italic text-slate-400 min-h-[3rem] px-4">
-                Presiona "Siguiente Paso" para iniciar con un vector aleatorio.
-            </p>
+    <div class="layout-wrapper grid grid-cols-1 lg:grid-cols-12 gap-8 w-full max-w-6xl px-4">
+        <!-- Columna Izquierda: Simulación -->
+        <main class="lg:col-span-8 bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+            <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: Encontrar el Valor Máximo</h1>
             
-            <div class="flex gap-4">
-                <button onclick="resetSimulation()" class="px-6 py-2 border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
-                    Reiniciar (Aleatorio)
-                </button>
-                <button id="next-btn" onclick="nextStep()" class="px-8 py-2 border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95">
-                    Siguiente Paso
-                </button>
+            <!-- Contenedor del Vector -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10" id="array-container">
+                <!-- Los elementos se generan dinámicamente -->
             </div>
-        </div>
-    </main>
+
+            <!-- Panel de Estado -->
+            <div class="flex flex-wrap md:flex-nowrap items-center justify-between gap-4 text-center bg-slate-950 p-6 rounded-xl mb-8">
+                <div class="flex-1 min-w-[100px] flex flex-col">
+                    <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Índice (i)</span>
+                    <span id="display-i" class="text-3xl font-mono font-semibold">-</span>
+                </div>
+                <div class="flex-1 min-w-[100px] flex flex-col">
+                    <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Valor x(i)</span>
+                    <span id="display-val" class="text-3xl font-mono font-semibold text-red-500">-</span>
+                </div>
+                <div class="flex-1 min-w-[100px] flex flex-col md:border-l border-slate-800">
+                    <span class="text-xs text-slate-500 uppercase font-bold tracking-wider">Máximo Anterior</span>
+                    <span id="display-prev-max" class="text-3xl font-mono font-semibold text-slate-500">-</span>
+                </div>
+                <div class="flex-1 min-w-[100px] flex flex-col md:border-l border-slate-800">
+                    <span class="text-xs text-indigo-400 uppercase font-bold tracking-wider">Máximo Actual</span>
+                    <span id="display-max" class="text-4xl font-mono font-bold text-emerald-400">-</span>
+                </div>
+            </div>
+
+            <!-- Controles -->
+            <div class="flex flex-col items-center gap-6">
+                <p id="step-desc" class="text-center italic text-slate-400 min-h-[3rem] px-4">
+                    Presiona "Siguiente Paso" para iniciar con un vector aleatorio.
+                </p>
+                
+                <div class="flex gap-4">
+                    <button onclick="resetSimulation()" class="px-6 py-2 border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
+                        Reiniciar (Aleatorio)
+                    </button>
+                    <button id="next-btn" onclick="nextStep()" class="px-8 py-2 border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95">
+                        Siguiente Paso
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Columna Derecha: Pseudocódigo -->
+        <aside id="pseudocode-container" class="hidden lg:block lg:col-span-4 bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+            <h2 class="text-xl font-bold mb-4 text-emerald-400">Pseudocódigo</h2>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 overflow-x-auto">
+                <pre class="text-sm font-mono text-emerald-500 leading-relaxed">
+Input: x,n
+max=x(1)
+for i=2,...,n
+    if max&lt;x(i)
+        max=x(i)
+    end
+end
+return max</pre>
+            </div>
+        </aside>
+    </div>
 
     <script>
         let numbers = [];
@@ -92,6 +116,13 @@
         const displayMax = document.getElementById('display-max');
         const stepDesc = document.getElementById('step-desc');
         const nextBtn = document.getElementById('next-btn');
+        const pseudocodeContainer = document.getElementById('pseudocode-container');
+        const toggleBtn = document.getElementById('toggle-pseudocode');
+
+        toggleBtn.addEventListener('click', () => {
+            pseudocodeContainer.classList.toggle('hidden');
+        });
+
 
         function generateRandomArray() {
             const size = Math.floor(Math.random() * 4) + 5;

@@ -24,9 +24,12 @@ describe('Palindrome Simulation Page', () => {
   it('should have status displays', () => {
     expect($('#display-n').length).toBeGreaterThan(0);
     expect($('#display-m').length).toBeGreaterThan(0);
+    expect($('#display-temp').length).toBeGreaterThan(0);
+    expect($('#display-mod').length).toBeGreaterThan(0);
   });
 
   it('should have simulation controls', () => {
     expect($('#input-n').length).toBeGreaterThan(0);
+    expect($('#next-btn').length).toBeGreaterThan(0);
   });
 });

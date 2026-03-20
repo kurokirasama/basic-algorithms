@@ -30,47 +30,84 @@
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="w-full max-w-4xl p-4"><a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded mb-4 transition duration-300 neon-border">Volver</a></div>
+    <div class="w-full max-w-6xl p-4 flex justify-between items-center">
+        <a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded transition duration-300 neon-border">Volver</a>
+        <button id="toggle-pseudocode" class="lg:hidden border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-4 rounded transition duration-300 neon-border">
+            Pseudocódigo
+        </button>
+    </div>
 
-    <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
-        <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulador: Dígito Verificador RUT</h1>
-        
-        <div class="flex flex-col items-center gap-6">
-            <div class="bg-slate-950 p-6 rounded-xl mb-6 border border-slate-800 w-full max-w-3xl">
-                <h2 class="text-sm font-bold text-slate-400 uppercase mb-4 text-center">Dígitos Procesados (x)</h2>
-                <div class="flex flex-wrap justify-center gap-2" id="container-digits"></div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-center bg-slate-950 p-6 rounded-xl mb-8 border border-slate-800 w-full max-w-3xl">
-                <div class="flex flex-col">
-                    <span class="text-xs text-indigo-400 uppercase font-bold tracking-wider">Valor n</span>
-                    <span id="display-n" class="text-3xl font-mono font-bold text-purple-300">-</span>
-                </div>
-                <div class="flex flex-col border-l border-slate-700 pl-4">
-                    <span class="text-xs text-red-500 uppercase font-bold tracking-wider">Dígito (d)</span>
-                    <span id="display-d" class="text-3xl font-mono font-bold text-red-500">-</span>
-                </div>
-                <div class="flex flex-col border-l border-slate-700 pl-4">
-                    <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Suma (sum)</span>
-                    <span id="display-sum" class="text-3xl font-mono font-bold text-emerald-400">0</span>
-                </div>
-            </div>
-
-            <p id="step-desc" class="text-center italic text-slate-400 min-h-[3rem] px-4 max-w-2xl">
-                Ingresa un número para comenzar.
-            </p>
+    <div class="layout-wrapper grid grid-cols-1 lg:grid-cols-12 gap-8 w-full max-w-6xl px-4">
+        <!-- Columna Izquierda: Simulación -->
+        <main class="lg:col-span-8 bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+            <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulador: Dígito Verificador RUT</h1>
             
-            <div class="flex flex-wrap justify-center gap-4">
-                <input type="number" id="input-rut" placeholder="Ej: 12345678" class="px-4 py-2 bg-slate-900 text-slate-100 border-2 border-slate-700 rounded-lg focus:border-purple-500 outline-none w-32 text-center font-mono font-bold">
-                <button onclick="startSimulation()" class="border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
-                    Cargar
-                </button>
-                <button id="next-btn" onclick="nextStep()" class="border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95 disabled:opacity-50">
-                    Siguiente Paso
-                </button>
+            <div class="flex flex-col items-center gap-6">
+                <div class="bg-slate-950 p-6 rounded-xl mb-6 border border-slate-800 w-full max-w-3xl">
+                    <h2 class="text-sm font-bold text-slate-400 uppercase mb-4 text-center">Dígitos Procesados (x)</h2>
+                    <div class="flex flex-wrap justify-center gap-2" id="container-digits"></div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-center bg-slate-950 p-6 rounded-xl mb-8 border border-slate-800 w-full max-w-3xl">
+                    <div class="flex flex-col">
+                        <span class="text-xs text-indigo-400 uppercase font-bold tracking-wider">Valor n</span>
+                        <span id="display-n" class="text-3xl font-mono font-bold text-purple-300">-</span>
+                    </div>
+                    <div class="flex flex-col border-l border-slate-700 pl-4">
+                        <span class="text-xs text-red-500 uppercase font-bold tracking-wider">Dígito (d)</span>
+                        <span id="display-d" class="text-3xl font-mono font-bold text-red-500">-</span>
+                    </div>
+                    <div class="flex flex-col border-l border-slate-700 pl-4">
+                        <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Suma (sum)</span>
+                        <span id="display-sum" class="text-3xl font-mono font-bold text-emerald-400">0</span>
+                    </div>
+                </div>
+
+                <p id="step-desc" class="text-center italic text-slate-400 min-h-[3rem] px-4 max-w-2xl">
+                    Ingresa un número para comenzar.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-4">
+                    <input type="number" id="input-rut" placeholder="Ej: 12345678" class="px-4 py-2 bg-slate-900 text-slate-100 border-2 border-slate-700 rounded-lg focus:border-purple-500 outline-none w-32 text-center font-mono font-bold">
+                    <button onclick="startSimulation()" class="border-2 border-slate-600 hover:bg-slate-600/20 text-slate-300 font-medium py-2 px-6 rounded transition duration-300">
+                        Cargar
+                    </button>
+                    <button id="next-btn" onclick="nextStep()" class="border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95 disabled:opacity-50">
+                        Siguiente Paso
+                    </button>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
+
+        <!-- Columna Derecha: Pseudocódigo -->
+        <aside id="pseudocode-container" class="hidden lg:block lg:col-span-4 bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+            <h2 class="text-xl font-bold mb-4 text-emerald-400">Pseudocódigo</h2>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 overflow-x-auto">
+                <pre class="text-sm font-mono text-emerald-500 leading-relaxed">
+Input: rut
+[d,n]=reverse_digits(rut)
+x=(2,3,4,5,6,7)
+sum=0
+j=1
+for i=1,...,n
+    sum=sum+d(i)*x(j)
+    if j==6
+        j=1
+    else 
+        j=j+1
+    end
+end
+d_v=11-mod(sum,11)
+if d_v == 10
+    d_v = K
+end
+if d_v == 11
+    d_v = 0
+end
+return d_v</pre>
+            </div>
+        </aside>
+    </div>
 
     <script>
         let rut = 0;
@@ -88,6 +125,12 @@
         const stepDesc = document.getElementById('step-desc');
         const nextBtn = document.getElementById('next-btn');
         const inputRUT = document.getElementById('input-rut');
+        const pseudocodeContainer = document.getElementById('pseudocode-container');
+        const toggleBtn = document.getElementById('toggle-pseudocode');
+
+        toggleBtn.addEventListener('click', () => {
+            pseudocodeContainer.classList.toggle('hidden');
+        });
 
         function startSimulation() {
             const val = parseInt(inputRUT.value);

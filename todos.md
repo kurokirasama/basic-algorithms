@@ -1,0 +1,1 @@
+- for each page example, divide the screen in two columns (without any visual markers), left column the current content, right column the corresponding pseudocode you can find in @docs/psudocode.md

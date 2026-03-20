@@ -24,34 +24,69 @@
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="w-full max-w-4xl p-4"><a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded mb-4 transition duration-300 neon-border">Volver</a></div>
+    <div class="w-full max-w-6xl p-4 flex justify-between items-center">
+        <a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded transition duration-300 neon-border">Volver</a>
+        <button id="toggle-pseudocode" class="lg:hidden border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-4 rounded transition duration-300 neon-border">
+            Pseudocódigo
+        </button>
+    </div>
 
-    <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
-        <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: Función a Trozos</h1>
-        
-        <div class="grid grid-cols-1 gap-6 text-center bg-slate-950 p-6 rounded-xl mb-8 border border-slate-800">
-            <div>
-                <h2 class="text-sm font-bold text-slate-400 uppercase mb-2">Definición de f(x)</h2>
-                <!-- LaTeX rendering -->
-                <div class="font-mono text-lg text-slate-300">
-                    $$ f(x) = \begin{cases} x^2 & \text{si } x \le -1 \\ x & \text{si } -1 < x < 1 \\ x^3 & \text{si } x \ge 1 \end{cases} $$
+    <div class="layout-wrapper grid grid-cols-1 lg:grid-cols-12 gap-8 w-full max-w-6xl px-4">
+        <!-- Columna Izquierda: Simulación -->
+        <main class="lg:col-span-8 bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+            <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulación: Función a Trozos</h1>
+            
+            <div class="grid grid-cols-1 gap-6 text-center bg-slate-950 p-6 rounded-xl mb-8 border border-slate-800">
+                <div>
+                    <h2 class="text-sm font-bold text-slate-400 uppercase mb-2">Definición de f(x)</h2>
+                    <!-- LaTeX rendering -->
+                    <div class="font-mono text-lg text-slate-300">
+                        $$ f(x) = \begin{cases} x^2 & \text{si } x \le -1 \\ x & \text{si } -1 < x < 1 \\ x^3 & \text{si } x \ge 1 \end{cases} $$
+                    </div>
+                </div>
+                <div class="border-t border-slate-800 pt-4">
+                    <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Resultado f(x)</span>
+                    <div id="display-result" class="text-5xl font-mono font-bold text-emerald-400 mt-2">-</div>
                 </div>
             </div>
-            <div class="border-t border-slate-800 pt-4">
-                <span class="text-xs text-emerald-400 uppercase font-bold tracking-wider">Resultado f(x)</span>
-                <div id="display-result" class="text-5xl font-mono font-bold text-emerald-400 mt-2">-</div>
-            </div>
-        </div>
 
-        <div class="flex flex-col items-center gap-6">
-            <input type="number" step="0.1" id="input-x" placeholder="Ej: 0.5" class="px-4 py-2 bg-slate-900 text-slate-100 border-2 border-slate-700 rounded-lg focus:border-purple-500 outline-none w-32 text-center font-mono font-bold">
-            <button onclick="calculate()" class="border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95">
-                Calcular
-            </button>
-        </div>
-    </main>
+            <div class="flex flex-col items-center gap-6">
+                <input type="number" step="0.1" id="input-x" placeholder="Ej: 0.5" class="px-4 py-2 bg-slate-900 text-slate-100 border-2 border-slate-700 rounded-lg focus:border-purple-500 outline-none w-32 text-center font-mono font-bold">
+                <button onclick="calculate()" class="border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border active:scale-95">
+                    Calcular
+                </button>
+            </div>
+        </main>
+
+        <!-- Columna Derecha: Pseudocódigo -->
+        <aside id="pseudocode-container" class="hidden lg:block lg:col-span-4 bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+            <h2 class="text-xl font-bold mb-4 text-emerald-400">Pseudocódigo</h2>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 overflow-x-auto">
+                <pre class="text-sm font-mono text-emerald-500 leading-relaxed">
+Input: x
+
+if x&lt;=-1
+    y=x^2
+else
+    if x&lt;1
+        y=x
+    else
+        y=x^3
+    end
+end
+return y</pre>
+            </div>
+        </aside>
+    </div>
 
     <script>
+        const pseudocodeContainer = document.getElementById('pseudocode-container');
+        const toggleBtn = document.getElementById('toggle-pseudocode');
+
+        toggleBtn.addEventListener('click', () => {
+            pseudocodeContainer.classList.toggle('hidden');
+        });
+
         function calculate() {
             const x = parseFloat(document.getElementById('input-x').value);
             if (isNaN(x)) return;

@@ -23,6 +23,9 @@ describe('RUT Verification Digit Simulation Page', () => {
 
   it('should have simulation controls', () => {
     expect($('#input-rut').length).toBeGreaterThan(0);
-    expect($('#result').length).toBeGreaterThan(0);
+    // expect($('#result').length).toBeGreaterThan(0); // Removed as UI changed
+    expect($('#display-n').length).toBeGreaterThan(0);
+    expect($('#display-d').length).toBeGreaterThan(0);
+    expect($('#display-sum').length).toBeGreaterThan(0);
   });
 });

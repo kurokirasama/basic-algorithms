@@ -130,6 +130,30 @@ function tridiagonal(a, b, c, n) {
   return A;
 }
 
+/**
+ * Calculates the verification digit (DV) for a RUT number.
+ * @param {number} n The RUT number without the verification digit.
+ * @returns {string|number} The verification digit (0-9, or K).
+ */
+function rut_dv(n) {
+  let s = 0;
+  let m = 2;
+  const digits = String(n).split("").reverse().map(Number);
+  
+  for (let d of digits) {
+    s += d * m;
+    m++;
+    if (m > 7) m = 2;
+  }
+  
+  let resto = s % 11;
+  let d_v = 11 - resto;
+  
+  if (d_v === 11) return 0;
+  if (d_v === 10) return 'K';
+  return d_v;
+}
+
 module.exports = {
   minimo,
   sort_desc,
@@ -138,4 +162,5 @@ module.exports = {
   piecewise,
   vector_piecewise,
   tridiagonal,
+  rut_dv,
 };

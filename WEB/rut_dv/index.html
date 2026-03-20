@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador: Dígito Verificador RUT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    @font-face {
+      font-family: 'Monocraft';
+      src: url('https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft@main/dist/Monocraft-ttf/Monocraft.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: 'Monocraft', monospace;
+    }
+        .neon-border {
+            box-shadow: 0 0 5px #fff, 0 0 10px #a855f7, inset 0 0 5px #a855f7;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-4xl p-4"><a href="../../index.html" class="inline-block border-2 border-red-500 hover:bg-red-500/20 text-red-400 font-bold py-2 px-4 rounded mb-4 transition duration-300 neon-border">Volver</a></div>
+
+    <main class="w-full max-w-4xl bg-slate-900 rounded-2xl shadow-xl border border-slate-800 p-8">
+        <h1 class="text-2xl font-bold text-center mb-8 text-purple-400">Simulador: Dígito Verificador RUT</h1>
+        
+        <div class="bg-slate-950 p-6 rounded-xl mb-8 border border-slate-800">
+            <div class="flex flex-col items-center gap-4">
+                <input type="number" id="input-rut" placeholder="Ej: 12345678" class="bg-slate-900 text-slate-100 border-2 border-slate-700 rounded p-4 text-center w-full max-w-sm text-2xl font-bold">
+                <button onclick="calculate()" class="border-2 border-purple-500 hover:bg-purple-500/20 text-purple-400 font-bold py-2 px-8 rounded transition duration-300 neon-border">
+                    Calcular DV
+                </button>
+            </div>
+            <div id="result" class="text-center mt-6 text-3xl font-mono font-bold text-emerald-400">
+                DV: -
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function calculate() {
+            const n = parseInt(document.getElementById('input-rut').value);
+            if (isNaN(n)) return;
+            
+            let s = 0;
+            let m = 2;
+            const digits = String(n).split("").reverse().map(Number);
+            
+            for (let d of digits) {
+                s += d * m;
+                m++;
+                if (m > 7) m = 2;
+            }
+            
+            let resto = s % 11;
+            let dv = 11 - resto;
+            
+            let res = dv;
+            if (dv === 11) res = 0;
+            if (dv === 10) res = 'K';
+            
+            document.getElementById('result').innerText = `DV: ${res}`;
+        }
+    </script>
+</body>
+</html>

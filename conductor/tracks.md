@@ -9,3 +9,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 - [Project Initialization and GitHub Setup](./archive/project_setup_20260328/index.md) - Completed 2026-03-28
 
 ---
+
+---
+
+- [ ] **Track: LinkedIn Promotional Post & README Visuals**
+*Link: [./tracks/linkedin_promotion_20260328/](./tracks/linkedin_promotion_20260328/)*

@@ -12,5 +12,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: LinkedIn Promotional Post & README Visuals**
+- [x] **Track: LinkedIn Promotional Post & README Visuals**
 *Link: [./tracks/linkedin_promotion_20260328/](./tracks/linkedin_promotion_20260328/)*

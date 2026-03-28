@@ -3,34 +3,64 @@
 ## Guiding Principles
 
 1. **The Plan is the Source of Truth:** All work must be tracked in `plan.md`
-2. **The Tech Stack is Deliberate:** Changes to the tech stack must be documented in `tech-stack.md` *before* implementation
-3. **Test-Driven Development:** Write unit tests before implementing functionality
-4. **High Code Coverage:** Aim for >80% code coverage for all modules
-5. **User Experience First:** Every decision should prioritize user experience
-6. **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
+2. **Nushell-First:** Priority must be given to using Nushell pipelines and the `evaluate` tool for all system interactions and data manipulation tasks.
+3. **Memory-Aware:** Retrieve and utilize project-specific memories and notes from Obsidian before starting new tasks to maintain consistency.
+4. **Context Engineering:** Perform systematic discovery and planning using specialized tools (context7, deepwiki, etc.) for complex tasks.
+5. **The Tech Stack is Deliberate:** Changes to the tech stack must be documented in `tech-stack.md` *before* implementation
+6. **Test-Driven Development:** Write unit tests before implementing functionality
+7. **High Code Coverage:** Aim for >80% code coverage for all modules
+8. **User Experience First:** Every decision should prioritize user experience
+9. **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
+
+## General Behavior Protocol
+
+**CRITICAL:** Before proceeding with any task, always:
+1.  **Choose Persona:** Identify the appropriate persona/skill via `/skills list`.
+2.  **Activate Skill:** Call `activate_skill(name: "skill-name")` to load expert instructions.
+3.  **Inform User:** Explicitly state the chosen persona.
+4.  **Load Memories:** Retrieve relevant Obsidian memories or notes.
+
+## Memory Management Workflow
+
+We utilize Obsidian notes (memories) to maintain consistency and retrieve project insights.
+1.  **Search First:** Always search the `INSIGHTS/` folder in the Obsidian vault using the `obsidian cli`.
+2.  **Grounding:** Ground every response in verified existing knowledge before proposing changes.
+3.  **Storage:** Store new architectural decisions and insights in `conductor/memory.md` and sync with Obsidian using the `obsidian-memory-expert` skill.
+
+## Context Engineering Protocol
+
+For complex tasks, follow the structured Discovery cycle:
+1.  **Discovery (Search First):** Map architecture using `glob`, `read_file`, and `grep_search`.
+2.  **External Wisdom:** Use `ref_search_documentation`, `context7`, or `deepwiki` for up-to-date APIs and best practices.
+3.  **Synthesis:** Cross-reference sources and document findings in `conductor/context.md`.
+4.  **Strategic Planning:** Draft an actionable plan and obtain user approval before execution.
+
+## Obsidian Memory & Context Engineering
+
+### Memory Retrieval (Obsidian INSIGHTS)
+1.  **Scope:** Always start by searching the `INSIGHTS/` folder for existing architectural decisions, style preferences, and key constraints.
+2.  **Protocol:** Use `obsidian search` with keywords related to the current task.
+3.  **Grounding:** Ground the current session's strategy in the retrieved memories.
+
+### Context Engineering (The Discovery Cycle)
+1.  **Discovery:** Map the architecture, dependencies, and existing patterns within the current workspace using `glob` and `grep_search`.
+2.  **Deep Search:** For complex tasks, perform a deep search for code patterns and usage examples.
+3.  **External Wisdom:** Validate libraries and best practices using `web_search`, `ref_search_documentation`, `context7`, or `deepwiki`.
+4.  **Synthesis:** Cross-reference all gathered data and identify gaps. Record results in `conductor/context.md`.
+5.  **State Management:** Use `sequentialthinking` for complex, multi-step analysis and plan revision.
 
 ## Task Workflow
+...
 
-All tasks follow a strict lifecycle:
+3. **Mark In Progress:** Before beginning work, edit `plan.md` and change the task from `[ ]` to `[~]`
 
-### Standard Task Workflow
+4. **Implementation & Testing (Red-Green-Refactor):**
+   - Follow TDD: Write failing tests, implement, then refactor.
+   - Use Nushell for file operations and data processing where possible.
 
-1. **Select Task:** Choose the next available task from `plan.md` in sequential order
-
-2. **Mark In Progress:** Before beginning work, edit `plan.md` and change the task from `[ ]` to `[~]`
-
-3. **Write Failing Tests (Red Phase):**
-   - Create a new test file for the feature or bug fix.
-   - Write one or more unit tests that clearly define the expected behavior and acceptance criteria for the task.
-   - **CRITICAL:** Run the tests and confirm that they fail as expected. This is the "Red" phase of TDD. Do not proceed until you have failing tests.
-
-4. **Implement to Pass Tests (Green Phase):**
-   - Write the minimum amount of application code necessary to make the failing tests pass.
-   - Run the test suite again and confirm that all tests now pass. This is the "Green" phase.
-
-5. **Refactor (Optional but Recommended):**
-   - With the safety of passing tests, refactor the implementation code and the test code to improve clarity, remove duplication, and enhance performance without changing the external behavior.
-   - Rerun tests to ensure they still pass after refactoring.
+5. **Discord Notification for Long Tasks (5min+):**
+   - If a task exceeds 5 minutes, draft a technical summary and send it via Discord using `automessage_discord`.
+   - If waiting for user feedback (`ask_user`), send the notification *before* asking.
 
 6. **Verify Coverage:** Run coverage reports using the project's chosen tools. For example, in a Python project, this might look like:
    ```bash

@@ -53,6 +53,19 @@ describe('Two-Column Layout Verification (All Pages)', () => {
         const toggleBtn = $('#toggle-pseudocode');
         expect(toggleBtn.length).toBeGreaterThan(0);
       });
+
+      it('should NOT have visual markers (borders, shadows, card-like backgrounds)', () => {
+        const layoutWrapper = $('.layout-wrapper');
+        const main = layoutWrapper.find('main');
+        const aside = layoutWrapper.find('aside');
+
+        // Check that main and aside don't have the card-like classes
+        const forbiddenClasses = ['bg-slate-900', 'rounded-2xl', 'shadow-xl', 'border'];
+        forbiddenClasses.forEach(cls => {
+          expect(main.hasClass(cls)).toBe(false);
+          expect(aside.hasClass(cls)).toBe(false);
+        });
+      });
     });
   });
 });

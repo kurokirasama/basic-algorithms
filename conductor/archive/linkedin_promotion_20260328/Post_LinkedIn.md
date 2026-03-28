@@ -1,4 +1,4 @@
-🚀 ¡Emocionado de compartir mi último proyecto personal!
+🚀 ¡Comparto mi último proyecto personal!
 
 Se trata de una plataforma interactiva diseñada para visualizar y comprender mejor los algoritmos fundamentales que forman la base de la informática y la estadística. Este proyecto fue desarrollado especialmente para los alumnos del curso de Computación Estadística I de la carrera de Ingeniería Estadística.
 

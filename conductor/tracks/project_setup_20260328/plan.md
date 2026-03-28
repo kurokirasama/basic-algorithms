@@ -7,7 +7,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Metadata & Licensing' (Protocol in workflow.md)
 
 ## Phase 2: Local Git Preparation & Remote Setup (GitHub Commands)
-- [ ] Task: Execute `git branch -M main` to ensure the primary branch is named `main`.
+- [x] Task: Execute `git branch -M main` to ensure the primary branch is named `main`.
 - [ ] Task: Execute `git remote add origin git@github.com:kurokirasama/basic-algorithms.git`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Local Git Preparation & Remote Setup' (Protocol in workflow.md)
 

@@ -5,11 +5,11 @@
 - [x] Task: Update `README.md` to include `![Dashboard Screenshot](docs/screenshoot.png)`.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Preparation & README Update' (Protocol in workflow.md)
 
-## Phase 2: LinkedIn Content Generation
-- [ ] Task: Activate `academic-linkedin-specialist` skill.
-- [ ] Task: Research project details (features, links) for high-quality post content.
-- [ ] Task: Generate LinkedIn post content in Spanish using the specialist persona.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: LinkedIn Content Generation' (Protocol in workflow.md)
+## Phase 2: LinkedIn Content Generation [checkpoint: manual]
+- [x] Task: Activate `academic-linkedin-specialist` skill.
+- [x] Task: Research project details (features, links) for high-quality post content.
+- [x] Task: Generate LinkedIn post content in Spanish using the specialist persona.
+- [x] Task: Conductor - User Manual Verification 'Phase 2: LinkedIn Content Generation' (Protocol in workflow.md)
 
 ## Phase 3: Track Finalization
 - [ ] Task: Present the final LinkedIn post and README changes to the user.

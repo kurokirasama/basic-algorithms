@@ -1,8 +1,0 @@
-{
-  "track_id": "project_setup_20260328",
-  "type": "chore",
-  "status": "new",
-  "created_at": "2026-03-28T10:00:00Z",
-  "updated_at": "2026-03-28T10:00:00Z",
-  "description": "Create the README.md for the project (ignore everything about the conductor folder/enviroment). include that this is deployed at https://basic-algorithms.kks.qzz.io create a .gitignore and add conductor/ GEMINI.md, .gitignore then upload to the repo via this commands (provided by github) git remote add origin git@github.com:kurokirasama/basic-algorithms.git git branch -M main git push -u origin main"
-}

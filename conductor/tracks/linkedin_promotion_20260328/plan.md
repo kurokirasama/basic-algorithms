@@ -1,9 +1,9 @@
 # Implementation Plan: LinkedIn Promotion & README Visuals
 
-## Phase 1: Preparation & README Update
-- [ ] Task: Verify or create placeholder for `docs/screenshoot.png`.
-- [ ] Task: Update `README.md` to include `![Dashboard Screenshot](docs/screenshoot.png)`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Preparation & README Update' (Protocol in workflow.md)
+## Phase 1: Preparation & README Update [checkpoint: manual]
+- [x] Task: Verify or create placeholder for `docs/screenshoot.png`.
+- [x] Task: Update `README.md` to include `![Dashboard Screenshot](docs/screenshoot.png)`.
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Preparation & README Update' (Protocol in workflow.md)
 
 ## Phase 2: LinkedIn Content Generation
 - [ ] Task: Activate `academic-linkedin-specialist` skill.

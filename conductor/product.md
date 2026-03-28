@@ -1,7 +1,7 @@
-# Product Definition
+# Basic Algorithms Simulation Suite
 
 ## Overview
-Algorithm Simulations Suite is a collection of interactive visualizations demonstrating fundamental statistical and mathematical algorithms.
+Basic Algorithms Simulation Suite is a collection of interactive visualizations demonstrating fundamental statistical and mathematical algorithms.
 
 ## Key Features
 - **Web Dashboard:** A centralized landing page ("Ejemplos de Algoritmos") providing easy access to all simulations.

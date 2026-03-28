@@ -6,7 +6,7 @@
 - [x] Task: Create `README.md` with project description and deployment link (https://basic-algorithms.kks.qzz.io), ensuring no mention of Conductor or Gemini. [974582d]
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Metadata & Licensing' (Protocol in workflow.md)
 
-## Phase 2: Local Git Preparation & Remote Setup (GitHub Commands)
+## Phase 2: Local Git Preparation & Remote Setup (GitHub Commands) [checkpoint: 5910135]
 - [x] Task: Execute `git branch -M main` to ensure the primary branch is named `main`.
 - [x] Task: Execute `git remote add origin git@github.com:kurokirasama/basic-algorithms.git`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Local Git Preparation & Remote Setup' (Protocol in workflow.md)

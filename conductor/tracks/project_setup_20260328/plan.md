@@ -1,6 +1,6 @@
 # Implementation Plan: Project Initialization and GitHub Setup (v2)
 
-## Phase 1: Project Metadata & Licensing
+## Phase 1: Project Metadata & Licensing [checkpoint: 13bf017]
 - [x] Task: Create `LICENSE.md` with standard MIT License text. [bde8de4]
 - [x] Task: Create `.gitignore` ignoring `conductor/`, `GEMINI.md`, `.gitignore`, `node_modules/`, `coverage/`, and `.env`. [1536d2c]
 - [x] Task: Create `README.md` with project description and deployment link (https://basic-algorithms.kks.qzz.io), ensuring no mention of Conductor or Gemini. [974582d]

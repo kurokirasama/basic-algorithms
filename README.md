@@ -1,7 +1,7 @@
-# Algorithm Simulations Suite (algorithms-cei)
+# Basic Algorithms Simulation Suite (algorithms-cei)
 
 ## Overview
-Algorithm Simulations Suite is a collection of interactive visualizations demonstrating fundamental statistical and mathematical algorithms.
+Basic Algorithms Simulation Suite is a collection of interactive visualizations demonstrating fundamental statistical and mathematical algorithms.
 
 ## Features
 - **Interactive Dashboards:** Explore algorithms through real-time simulations.

@@ -1,0 +1,13 @@
+# Conductor & Gemini
+conductor/
+GEMINI.md
+.gitignore
+
+# Development Artifacts
+node_modules/
+coverage/
+.env
+
+# OS Files
+.DS_Store
+Thumbs.db

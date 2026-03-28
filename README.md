@@ -3,6 +3,8 @@
 ## Overview
 Basic Algorithms Simulation Suite is a collection of interactive visualizations demonstrating fundamental statistical and mathematical algorithms.
 
+![Dashboard Screenshot](docs/screenshoot.png)
+
 ## Features
 - **Interactive Dashboards:** Explore algorithms through real-time simulations.
 - **Pseudocode Visualizations:** View algorithm logic alongside simulations for deeper understanding.

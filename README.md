@@ -22,11 +22,5 @@ Live demo available at: [https://basic-algorithms.kks.qzz.io](https://basic-algo
 3. Start the server: `node server.js`.
 4. Open your browser at `http://localhost:8004`.
 
-## Testing
-Run the test suite with:
-```bash
-npm test
-```
-
 ## License
 Distributed under the MIT License. See `LICENSE.md` for more information.

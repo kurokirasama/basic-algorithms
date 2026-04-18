@@ -1,8 +1,0 @@
-{
-  "track_id": "security_audit_20260418",
-  "type": "chore",
-  "status": "new",
-  "created_at": "2026-04-18T19:40:00Z",
-  "updated_at": "2026-04-18T19:40:00Z",
-  "description": "audit security using the gemini-cli-security extension, analize results and determine if actions need to be taken, and then create the track to implement those actions"
-}

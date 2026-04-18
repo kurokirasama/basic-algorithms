@@ -1,5 +1,33 @@
 # Project Workflow
 
+### Status Reporting & Notifications
+
+#### Standard Task Summary
+After every successful task completion, provide a very brief summary in English of what was done and how.
+- **Tone:** Conceptual description, including technical details only where appropriate for clarity.
+- **Exception:** Do NOT provide a summary for trivial tasks unless explicitly requested.
+
+#### Mandatory Discord Notification for User Input (CRITICAL)
+Whenever you are about to use the `ask_user` tool to request feedback, clarification, or approval, you **MUST** first send a Discord notification. This ensures the user is alerted that the agent is blocked and waiting for input.
+
+- **Notification Content**:
+    - **Exact Question**: Include the literal question(s) being asked via `ask_user`.
+    - **Task Metadata**: State the current Track ID, Phase Name, and Task Description.
+    - **Context for Review/Opinion**: If asking for a review or opinion on changes:
+        - List the modified files.
+        - Provide a high-level conceptual summary of the changes.
+        - Include a simplified `git diff` (markdown code block ````diff`) focusing on relevant logic.
+- **Diff Management**: If the diff or total message exceeds 2000 characters, split it into several messages.
+- **Command**: Execute the `mcp_standard-nushell_evaluate` tool with `to discord $message -p`.
+- **Timing**: Send the notification **immediately before** calling `ask_user`.
+
+#### Discord Notification for Long Tasks (5min+)
+If a task takes 5 minutes or more, you **MUST** perform these steps before proceeding or asking for input:
+1.  **Draft Report (English)**: Create a concise conceptual and technical summary, immediate next steps, and status (waiting for user or continuing automatically).
+2.  **Send via Discord**: Execute the `mcp_standard-nushell_evaluate` tool with `to discord $message -p`.
+3.  **Sequence Priority**: If the next step involves `ask_user`, follow the "Mandatory Discord Notification for User Input" protocol above.
+
+
 ## Guiding Principles
 
 1. **The Plan is the Source of Truth:** All work must be tracked in `plan.md`
@@ -58,9 +86,22 @@ For complex tasks, follow the structured Discovery cycle:
    - Follow TDD: Write failing tests, implement, then refactor.
    - Use Nushell for file operations and data processing where possible.
 
-5. **Discord Notification for Long Tasks (5min+):**
-   - If a task exceeds 5 minutes, draft a technical summary and send it via Discord using `automessage_discord`.
-   - If waiting for user feedback (`ask_user`), send the notification *before* asking.
+5. **Status Reporting & Notifications:**
+   - **Mandatory Discord Notification for User Input (CRITICAL):** Whenever you are about to use the `ask_user` tool to request feedback, clarification, or approval, you **MUST** first send a Discord notification. This ensures the user is alerted that the agent is blocked and waiting for input.
+     1. **Draft Notification Content**:
+        - **Exact Question**: Include the literal question(s) being asked via `ask_user`.
+        - **Task Metadata**: State the current Track ID, Phase Name, and Task Description.
+        - **Context for Review/Opinion**: If asking for a review or opinion on changes:
+          - List the modified files.
+          - Provide a high-level conceptual summary of the changes.
+          - Include a simplified `git diff` (markdown code block ````diff````) focusing on relevant logic.
+     2. **Diff Management**: If the diff or total message exceeds 2000 characters, split it into several messages.
+     3. **Send via Discord**: Send it via the `evaluate` tool using `to discord $message -p`.
+     4. **Timing**: Ensure the notification is sent **before** triggering the `ask_user` call.
+   - **Discord Notification for Long Tasks (5min+):** If a task takes **5 minutes or more**, you MUST:
+     1. Draft a concise conceptual and technical report in English.
+     2. Send it via the `evaluate` tool using `to discord $message -p`.
+     3. If the next step involves `ask_user`, prioritize the "Mandatory Discord Notification for User Input" protocol above.
 
 6. **Verify Coverage:** Run coverage reports using the project's chosen tools. For example, in a Python project, this might look like:
    ```bash
@@ -96,6 +137,18 @@ For complex tasks, follow the structured Discovery cycle:
     - **Action:** Stage the modified `plan.md` file.
     - **Action:** Commit this change with a descriptive message (e.g., `conductor(plan): Mark task 'Create user model' as complete`).
 
+### Automated Manual Verification Protocol
+
+When a workflow or task requires manual verification (e.g., Phase Completion, Quality Gates), the agent **MUST** evaluate if the verification steps are "simple".
+A verification step is "simple" if it is:
+- **Read-Only**: Does not modify the codebase or critical system state.
+- **Non-Destructive**: Safe to execute as a background process or standalone check.
+- **Fast Execution**: Expected to complete quickly.
+- **Examples**: Checking file contents, executing scripts (tests, linters), analyzing stdout/stderr or log files.
+
+If the verification steps meet these criteria, the agent **MUST execute these steps autonomously** instead of asking the user for confirmation.
+- **Fallback & Error Handling**: If an automated verification step fails, the agent must attempt an **Auto-Fix & Retry once**. If the retry fails, it must halt and ask the user for manual intervention.
+- **Logging**: All automated verification outcomes must be clearly documented in the task or phase summaries and git notes.
 ### Phase Completion Verification and Checkpointing Protocol
 
 **Trigger:** This protocol is executed immediately after a task is completed that also concludes a phase in `plan.md`.
@@ -141,8 +194,9 @@ For complex tasks, follow the structured Discovery cycle:
         3.  **Confirm that you receive:** A JSON response with a status of `201 Created`.
         ```
 
-5.  **Await Explicit User Feedback:**
-    -   After presenting the detailed plan, ask the user for confirmation: "**Does this meet your expectations? Please confirm with yes or provide feedback on what needs to be changed.**"
+5.  **Await Explicit User Feedback OR Execute Autonomously:**
+    -   **Automated Verification:** Evaluate the generated plan against the **Automated Manual Verification Protocol**. If ALL steps are "simple" (Read-Only, Non-Destructive, Fast), the agent **MUST execute them autonomously**, attempt one Auto-Fix & Retry on failure, and proceed to step 6 on success.
+    -   **Manual Verification:** If any step requires human validation (e.g., visual checks, destructive actions), present the detailed plan and ask the user for confirmation: "**Does this meet your expectations? Please confirm with yes or provide feedback on what needs to be changed.**"
     -   **PAUSE** and await the user's response. Do not proceed without an explicit yes or confirmation.
 
 6.  **Create Checkpoint Commit:**
@@ -163,7 +217,6 @@ For complex tasks, follow the structured Discovery cycle:
     - **Action:** Commit this change with a descriptive message following the format `conductor(plan): Mark phase '<PHASE NAME>' as complete`.
 
 10.  **Announce Completion:** Inform the user that the phase is complete and the checkpoint has been created, with the detailed verification report attached as a git note.
-
 ### Quality Gates
 
 Before marking any task complete, verify:
@@ -361,3 +414,14 @@ A task is complete when:
 - Document lessons learned
 - Optimize for user happiness
 - Keep things simple and maintainable
+
+
+9. **Status Reporting & Notifications:**
+   - **Mandatory Notification for User Input (CRITICAL):** Whenever you are about to use the `ask_user` tool to request feedback, clarification, or approval, you **MUST** first send a Discord notification. This ensures the user is alerted that the agent is blocked and waiting for input.
+     1. Draft a brief message stating what you are waiting for.
+     2. Send it via the `evaluate` tool using `to discord $message -p`.
+     3. Ensure the notification is sent **before** triggering the `ask_user` call.
+   - **Discord Notification for Long Tasks:** If a task takes **5 minutes or more**, you MUST:
+     1. Draft a concise conceptual and technical report in English.
+     2. Send it via the `evaluate` tool using `to discord $message -p`.
+     3. If the next step involves `ask_user`, prioritize the "Mandatory Notification for User Input" protocol above.

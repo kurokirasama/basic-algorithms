@@ -11,3 +11,9 @@ The simulators should use a vibrant, dark-themed UI.
 ## UX Principles
 - **Mobile-Responsive:** The tools must perform seamlessly across all screen sizes.
 - **Instant Feedback:** Interactions must have immediate, low-latency visual responses to maintain engagement.
+
+
+## Commit Guidelines
+
+When generating or proposing commit messages, you **MUST** consider the following:
+- **Prohibited Patterns:** Never use `(conductor)` references or any other labels that identify the author as an AI (e.g., avoid `chore(conductor): ...`).

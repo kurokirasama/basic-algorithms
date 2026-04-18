@@ -10,3 +10,7 @@ This file tracks all major tracks for the project. Each track has its own detail
 - [LinkedIn Promotional Post & README Visuals](./archive/linkedin_promotion_20260328/index.md) - Completed 2026-03-28
 
 ---
+
+## Active Tracks
+- [ ] **Track: Security Audit and Remediation**
+*Link: [./tracks/security_audit_20260418/](./tracks/security_audit_20260418/)*

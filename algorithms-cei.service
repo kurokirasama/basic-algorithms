@@ -1,0 +1,14 @@
+[Unit]
+Description=Algorithm Simulations Suite Server
+After=network.target
+
+[Service]
+Type=simple
+User=kira
+WorkingDirectory=/home/kira/Yandex.Disk/webapps/algorithms_cei
+ExecStart=/usr/bin/node server.js
+Restart=always
+Environment=PORT=8004
+
+[Install]
+WantedBy=multi-user.target

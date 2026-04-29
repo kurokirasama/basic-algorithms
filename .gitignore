@@ -1,0 +1,25 @@
+# Conductor & Gemini
+conductor/
+GEMINI.md
+DESIGN.md
+.gitignore
+.gemini_security/
+INTERNAL_DEPLOYMENT.md
+algorithms-cei.service
+todos.md
+
+# Testing
+tests/
+
+# Core Source & Scripts
+src/
+scripts/
+
+# Development Artifacts
+node_modules/
+coverage/
+.env
+
+# OS Files
+.DS_Store
+Thumbs.db

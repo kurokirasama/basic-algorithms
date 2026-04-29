@@ -24,29 +24,5 @@ Live demo available at: [https://basic-algorithms.kks.qzz.io](https://basic-algo
 3. Start the server: `node server.js`.
 4. Open your browser at `http://localhost:8004`.
 
-## System Service Setup (Linux)
-To keep the server running in the background and ensure it restarts on boot:
-
-1. Copy the service file to the systemd directory:
-   ```bash
-   sudo cp algorithms-cei.service /etc/systemd/system/
-   ```
-2. Reload systemd to recognize the new service:
-   ```bash
-   sudo systemctl daemon-reload
-   ```
-3. Enable the service to start on boot:
-   ```bash
-   sudo systemctl enable algorithms-cei.service
-   ```
-4. Start the service immediately:
-   ```bash
-   sudo systemctl start algorithms-cei.service
-   ```
-5. Check the status:
-   ```bash
-   sudo systemctl status algorithms-cei.service
-   ```
-
 ## License
 Distributed under the MIT License. See `LICENSE.md` for more information.

@@ -11,7 +11,7 @@ This guide explains how to set up the `algorithms-cei` server as a background sy
 
 1. **Copy the service file** to the systemd configuration directory:
    ```bash
-   sudo cp algorithms-cei.service /etc/systemd/system/
+   sudo cp algorithms-cei.service /etc/systemd/system/ -f
    ```
 
 2. **Reload systemd** to register the new service:

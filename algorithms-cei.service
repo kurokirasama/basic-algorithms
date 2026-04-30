@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=kira
-WorkingDirectory=/home/kira/Yandex.Disk/webapps/algorithms_cei
+WorkingDirectory=/home/ubuntu/Yandex.Disk/webapps/algorithms_cei
 ExecStart=/usr/bin/node server.js
 Restart=always
 Environment=PORT=8004

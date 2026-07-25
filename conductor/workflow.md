@@ -1,92 +1,75 @@
 # Project Workflow
 
-### Status Reporting & Notifications
+### Mandatory Protocols
 
-#### Standard Task Summary
+#### Nushell-First Guidelines
+Priority must be given to using Nushell pipelines and the `evaluate` tool for all system interactions and data manipulation tasks. **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command you intend to use in the corresponding session.
+
+#### Status Reporting & Notifications
+
+##### Standard Task Summary
 After every successful task completion, provide a very brief summary in English of what was done and how.
 - **Tone:** Conceptual description, including technical details only where appropriate for clarity.
 - **Exception:** Do NOT provide a summary for trivial tasks unless explicitly requested.
 
-#### Mandatory Discord Notification for User Input (CRITICAL)
-Whenever you are about to use the `ask_user` tool to request feedback, clarification, or approval, you **MUST** first send a Discord notification. This ensures the user is alerted that the agent is blocked and waiting for input.
+##### Mandatory Discord Notification for User Input (CRITICAL)
+Whenever you are about to use the `ask_user` (or equivalent) tool to request feedback, clarification, or approval, you **MUST** first send a Discord notification. This ensures the user is alerted that the agent is blocked and waiting for input.
+
+**CRITICAL:** ALWAYS execute `to-discord` nushell command and WAIT for it to finish BEFORE executing the `ask_user` tool. This sequential ordering is mandatory to ensure the user is notified that the agent is blocked and waiting.
 
 - **Notification Content**:
-    - **Exact Question**: Include the literal question(s) being asked via `ask_user`.
+    - **Exact Question**: Include the literal question(s) being that will be asked via `ask_user` (or equivalent).
     - **Task Metadata**: State the current Track ID, Phase Name, and Task Description.
     - **Context for Review/Opinion**: If asking for a review or opinion on changes:
         - List the modified files.
         - Provide a high-level conceptual summary of the changes.
-        - Include a simplified `git diff` (markdown code block ````diff`) focusing on relevant logic.
-- **Diff Management**: If the diff or total message exceeds 2000 characters, split it into several messages.
-- **Command**: Execute the `mcp_standard-nushell_evaluate` tool with `to-discord $message -p`.
-- **Timing**: Send the notification **immediately before** calling `ask_user`.
+        - Include a simplified `git diff` (markdown code block ````diff````) focusing on relevant logic.
+        - **Visibility Mandate**: The exact same information sent to Discord (question, metadata, context) MUST also be explicitly included in the `ask_user` call (or equivalent) so it is visible to the user in the chat interface.
+        - **Diff Management**: If the diff or total message exceeds 2000 characters, split it into several messages.
 
-#### Discord Notification for Long Tasks (5min+)
+- **Command**: Execute the nushell `evaluate` tool with `to-discord $message -p`.
+
+- **Command**: Execute the `mcp_standard-nushell_evaluate` tool with `to-discord $message -p`.
+- **Nushell Command**: `to-discord` is a Nushell command.
+- **Nushell Activation**: **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command.
+- **Fallback Mechanism**: If the `evaluate` tool is unavailable or fails, use the following syntax to ensure local config/env are loaded:
+  `nu --config /home/kira/.config/nushell/config.nu --env-config /home/kira/.config/nushell/env.nu -c 'to-discord "<message>" -p'`
+- **Timing**: Send the notification **immediately before** calling `ask_user`.
+- **`ask_user` Fallback**: If the `ask_user` tool is unavailable or not accessible in the current environment, ask the user directly by outputting your question as plain text in the chat interface.
+
+##### Discord Notification for Long Tasks (5min+)
 If a task takes 5 minutes or more, you **MUST** perform these steps before proceeding or asking for input:
 1.  **Draft Report (English)**: Create a concise conceptual and technical summary, immediate next steps, and status (waiting for user or continuing automatically).
 2.  **Send via Discord**: Execute the `mcp_standard-nushell_evaluate` tool with `to-discord $message -p`.
 3.  **Sequence Priority**: If the next step involves `ask_user`, follow the "Mandatory Discord Notification for User Input" protocol above.
 
+#### Track Management
+- **Cleanup & Synchronization**: Once a track is archived or deleted, the agent **MUST** activate the `git-sync` skill to ensure the local repository is fully synchronized (pull/push loop) with the remote origin. This is a non-optional MUST to ensure the remote origin is synchronized immediately after cleanup operations.
+- **Session Retrospective**: The `session-retro` skill MUST be executed when done if an issue was encountered that is new (compared against obsidian memory), required significant effort, or was interesting/unique.
 
 ## Guiding Principles
 
 1. **The Plan is the Source of Truth:** All work must be tracked in `plan.md`
-2. **Nushell-First:** Priority must be given to using Nushell pipelines and the `evaluate` tool for all system interactions and data manipulation tasks.
-3. **Memory-Aware:** Retrieve and utilize project-specific memories and notes from Obsidian before starting new tasks to maintain consistency.
-4. **Context Engineering:** Perform systematic discovery and planning using specialized tools (context7, deepwiki, etc.) for complex tasks.
-5. **The Tech Stack is Deliberate:** Changes to the tech stack must be documented in `tech-stack.md` *before* implementation
-6. **Test-Driven Development:** Write unit tests before implementing functionality
-7. **High Code Coverage:** Aim for >80% code coverage for all modules
-8. **User Experience First:** Every decision should prioritize user experience
-9. **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
-
-## General Behavior Protocol
-
-**CRITICAL:** Before proceeding with any task, always:
-1.  **Choose Persona:** Identify the appropriate persona/skill via `/skills list`.
-2.  **Activate Skill:** Call `activate_skill(name: "skill-name")` to load expert instructions.
-3.  **Inform User:** Explicitly state the chosen persona.
-4.  **Load Memories:** Retrieve relevant Obsidian memories or notes.
-
-## Memory Management Workflow
-
-We utilize Obsidian notes (memories) to maintain consistency and retrieve project insights.
-1.  **Search First:** Always search the `INSIGHTS/` folder in the Obsidian vault using the `obsidian cli`.
-2.  **Grounding:** Ground every response in verified existing knowledge before proposing changes.
-3.  **Storage:** Store new architectural decisions and insights in `conductor/memory.md` and sync with Obsidian using the `obsidian-memory-expert` skill.
-
-## Context Engineering Protocol
-
-For complex tasks, follow the structured Discovery cycle:
-1.  **Discovery (Search First):** Map architecture using `glob`, `read_file`, and `grep_search`.
-2.  **External Wisdom:** Use `ref_search_documentation`, `context7`, or `deepwiki` for up-to-date APIs and best practices.
-3.  **Synthesis:** Cross-reference sources and document findings in `conductor/context.md`.
-4.  **Strategic Planning:** Draft an actionable plan and obtain user approval before execution.
-
-## Obsidian Memory & Context Engineering
-
-### Memory Retrieval (Obsidian INSIGHTS)
-1.  **Scope:** Always start by searching the `INSIGHTS/` folder for existing architectural decisions, style preferences, and key constraints.
-2.  **Protocol:** Use `obsidian search` with keywords related to the current task.
-3.  **Grounding:** Ground the current session's strategy in the retrieved memories.
-
-### Context Engineering (The Discovery Cycle)
-1.  **Discovery:** Map the architecture, dependencies, and existing patterns within the current workspace using `glob` and `grep_search`.
-2.  **Deep Search:** For complex tasks, perform a deep search for code patterns and usage examples.
-3.  **External Wisdom:** Validate libraries and best practices using `web_search`, `ref_search_documentation`, `context7`, or `deepwiki`.
-4.  **Synthesis:** Cross-reference all gathered data and identify gaps. Record results in `conductor/context.md`.
-5.  **State Management:** Use `sequentialthinking` for complex, multi-step analysis and plan revision.
+2. **The Tech Stack is Deliberate:** Changes to the tech stack must be documented in `tech-stack.md` *before* implementation
+3. **Test-Driven Development (TDD):** Write unit tests before implementing functionality
+4. **BDD / Gherkin Acceptance Scenarios:** Define functional specifications using `Given-When-Then` scenarios in `spec.md`
+5. **High Code Coverage:** Aim for >80% code coverage for all modules
+6. **Mutation Testing:** Use mutation testing (e.g., mutmut, Stryker, cargo-mutants) to verify test assertion quality, targeting a `>70%` Mutation Score on new/modified code.
+7. **User Experience First:** Every decision should prioritize user experience
+8. **Non-Interactive & CI-Aware:** Prefer non-interactive commands. Use `CI=true` for watch-mode tools (tests, linters) to ensure single execution.
 
 ## Task Workflow
 ...
 
 3. **Mark In Progress:** Before beginning work, edit `plan.md` and change the task from `[ ]` to `[~]`
 
-4. **Implementation & Testing (Red-Green-Refactor):**
+4. **Consult howto.md:** Read the relevant section of the track's `howto.md` for per-task implementation guidance (code snippets, patterns, pitfalls, verification commands). The agent MAY update `howto.md` during implementation if better approaches are discovered.
+
+5. **Implementation & Testing (Red-Green-Refactor):**
    - Follow TDD: Write failing tests, implement, then refactor.
    - Use Nushell for file operations and data processing where possible.
 
-5. **Status Reporting & Notifications:**
+6. **Status Reporting & Notifications:**
    - **Mandatory Discord Notification for User Input (CRITICAL):** Whenever you are about to use the `ask_user` tool to request feedback, clarification, or approval, you **MUST** first send a Discord notification. This ensures the user is alerted that the agent is blocked and waiting for input.
      1. **Draft Notification Content**:
         - **Exact Question**: Include the literal question(s) being asked via `ask_user`.
@@ -96,18 +79,29 @@ For complex tasks, follow the structured Discovery cycle:
           - Provide a high-level conceptual summary of the changes.
           - Include a simplified `git diff` (markdown code block ````diff````) focusing on relevant logic.
      2. **Diff Management**: If the diff or total message exceeds 2000 characters, split it into several messages.
-     3. **Send via Discord**: Send it via the `evaluate` tool using `to-discord $message -p`.
+     3. **Send via Discord**: Send it via the `evaluate` tool using `to-discord $message -p
+- **Fallback Mechanism**: If the `evaluate` tool is unavailable or fails, use the following syntax to ensure local config/env are loaded:
+  `nu --config /home/kira/.config/nushell/config.nu --env-config /home/kira/.config/nushell/env.nu -c 'to-discord "<message>" -p'`
+- **Nushell Activation**: **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command.
+- **Fallback Mechanism**: If the `evaluate` tool is unavailable or fails, use the following syntax to ensure local config/env are loaded:
+  `nu --config /home/kira/.config/nushell/config.nu --env-config /home/kira/.config/nushell/env.nu -c 'to-discord "<message>" -p'`
+- **Nushell Activation**: **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command.`.
      4. **Timing**: Ensure the notification is sent **before** triggering the `ask_user` call.
+    - **`ask_user` Fallback**: If the `ask_user` tool is unavailable or not accessible in the current environment, ask the user directly by outputting your question as plain text in the chat interface.
    - **Discord Notification for Long Tasks (5min+):** If a task takes **5 minutes or more**, you MUST:
      1. Draft a concise conceptual and technical report in English.
-     2. Send it via the `evaluate` tool using `to-discord $message -p`.
+     2. Send it via the `evaluate` tool using `to-discord $message -p
+- **Fallback Mechanism**: If the `evaluate` tool is unavailable or fails, use the following syntax to ensure local config/env are loaded:
+  `nu --config /home/kira/.config/nushell/config.nu --env-config /home/kira/.config/nushell/env.nu -c 'to-discord "<message>" -p'`
+- **Nushell Activation**: **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command.
+- **Fallback Mechanism**: If the `evaluate` tool is unavailable or fails, use the following syntax to ensure local config/env are loaded:
+  `nu --config /home/kira/.config/nushell/config.nu --env-config /home/kira/.config/nushell/env.nu -c 'to-discord "<message>" -p'`
+- **Nushell Activation**: **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command.`.
      3. If the next step involves `ask_user`, prioritize the "Mandatory Discord Notification for User Input" protocol above.
 
-6. **Verify Coverage:** Run coverage reports using the project's chosen tools. For example, in a Python project, this might look like:
-   ```bash
-   pytest --cov=app --cov-report=html
-   ```
-   Target: >80% coverage for new code. The specific tools and commands will vary by language and framework.
+6. **Verify Coverage and Run Mutation Tests:**
+   - Run coverage reports using the project's chosen tools. Target: >80% coverage for new code.
+   - Run the project's mutation testing suite (e.g. `mutmut`, `stryker`, or `cargo-mutants`) on the modified modules. Target a Mutation Score of `>70%`. If any mutants survive, add tests with stronger assertions to kill them.
 
 7. **Document Deviations:** If implementation differs from tech stack:
    - **STOP** implementation
@@ -419,9 +413,35 @@ A task is complete when:
 9. **Status Reporting & Notifications:**
    - **Mandatory Notification for User Input (CRITICAL):** Whenever you are about to use the `ask_user` tool to request feedback, clarification, or approval, you **MUST** first send a Discord notification. This ensures the user is alerted that the agent is blocked and waiting for input.
      1. Draft a brief message stating what you are waiting for.
-     2. Send it via the `evaluate` tool using `to-discord $message -p`.
+     2. Send it via the `evaluate` tool using `to-discord $message -p
+- **Fallback Mechanism**: If the `evaluate` tool is unavailable or fails, use the following syntax to ensure local config/env are loaded:
+  `nu --config /home/kira/.config/nushell/config.nu --env-config /home/kira/.config/nushell/env.nu -c 'to-discord "<message>" -p'`
+- **Nushell Activation**: **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command.
+- **Fallback Mechanism**: If the `evaluate` tool is unavailable or fails, use the following syntax to ensure local config/env are loaded:
+  `nu --config /home/kira/.config/nushell/config.nu --env-config /home/kira/.config/nushell/env.nu -c 'to-discord "<message>" -p'`
+- **Nushell Activation**: **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command.`.
      3. Ensure the notification is sent **before** triggering the `ask_user` call.
    - **Discord Notification for Long Tasks:** If a task takes **5 minutes or more**, you MUST:
      1. Draft a concise conceptual and technical report in English.
-     2. Send it via the `evaluate` tool using `to-discord $message -p`.
+     2. Send it via the `evaluate` tool using `to-discord $message -p
+- **Fallback Mechanism**: If the `evaluate` tool is unavailable or fails, use the following syntax to ensure local config/env are loaded:
+  `nu --config /home/kira/.config/nushell/config.nu --env-config /home/kira/.config/nushell/env.nu -c 'to-discord "<message>" -p'`
+- **Nushell Activation**: **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command.
+- **Fallback Mechanism**: If the `evaluate` tool is unavailable or fails, use the following syntax to ensure local config/env are loaded:
+  `nu --config /home/kira/.config/nushell/config.nu --env-config /home/kira/.config/nushell/env.nu -c 'to-discord "<message>" -p'`
+- **Nushell Activation**: **ALWAYS** activate the `nushell-expert` skill before executing the first nushell command.`.
      3. If the next step involves `ask_user`, prioritize the "Mandatory Notification for User Input" protocol above.
+
+## Track Cleanup and Synchronization
+
+Once a track is archived or deleted, the agent **MUST** activate the `git-sync` skill to ensure the local repository is fully synchronized (pull/push loop) with the remote origin. This is a non-optional MUST to ensure the remote origin is synchronized immediately after cleanup operations.
+
+### Track Archival Memory Update Protocol (longterm-memory)
+
+**CRITICAL:** After archiving or completing a track, the agent MUST follow this ordered protocol:
+1. Execute `git-sync` to synchronize the remote origin
+2. Activate `longterm-memory-orchestrator` skill
+3. Follow the orchestrator's guidance to activate `longterm-memory-writer`
+4. Use `longterm-memory-writer`'s `write-trajectory-log` function to persist a trajectory log of the session
+
+This ensures that track completion, key decisions, outcomes, lessons learned, and the session trajectory are recorded in the project's episodic memory.
